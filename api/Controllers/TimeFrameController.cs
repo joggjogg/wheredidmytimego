@@ -29,10 +29,10 @@ public class TimeFrameController : ControllerBase
         return Created($"/timeframes/{entity.TimeFrameId}", entity);
     }
 
-    [HttpPatch("{timeFrameId:int}/end")]
-    public async Task<IActionResult> Patch(int timeFrameId, TimeFrameEndDTO data)
+    [HttpPatch("{timeFrameId:int}")]
+    public async Task<IActionResult> Patch(int timeFrameId, TimeFramePatchDTO data)
     {
-        var entity = await _timeFrameService.End(timeFrameId, data);
+        var entity = await _timeFrameService.Patch(timeFrameId, data);
         return Ok(entity);
     }
 }

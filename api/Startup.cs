@@ -28,6 +28,7 @@ public class Startup
         services.AddSwaggerGen();
 
         services.AddScoped<ITimeFrameService, TimeFrameService>();
+        services.AddScoped<IProjectService, ProjectService>();
     }
 
     public void Configure(IApplicationBuilder app, IServiceScopeFactory scopeFactory)

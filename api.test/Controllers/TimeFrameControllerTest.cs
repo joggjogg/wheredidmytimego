@@ -51,12 +51,12 @@ public class TimeFrameControllerTest
     public async Task Patch_WithValidData_ReturnsOkObjectResult()
     {
         const int timeFrameId = 1;
-        var data = new TimeFrameEndDTO()
+        var data = new TimeFramePatchDTO()
         {
             TimeFrameEnd = DateTime.Parse("2024-06-12 15:32:52"),
             TzName = "Europe/Luxembourg"
         };
-        _timeFrameServiceMock.Setup(m => m.End(timeFrameId, data)).ReturnsAsync(new TimeFrame());
+        _timeFrameServiceMock.Setup(m => m.Patch(timeFrameId, data)).ReturnsAsync(new TimeFrame());
 
         var actual = await _sut.Patch(timeFrameId, data);
 

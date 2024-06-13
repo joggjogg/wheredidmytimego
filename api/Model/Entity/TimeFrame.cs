@@ -8,6 +8,8 @@ public class TimeFrame
     [Key] public int TimeFrameId { get; set; }
     [Required] public DateTime TimeFrameStart { get; set; }
     public DateTime? TimeFrameEnd { get; set; }
-    [Column(TypeName = "text")]
-    public string? Description { get; set; }
+    [Column(TypeName = "text")] public string? Description { get; set; }
+    [Required]
+    public int ProjectId { get; set; }
+    public virtual Project Project { get; set; }
 }

@@ -15,4 +15,10 @@ public class TestDataBuilder(ApplicationContext db)
         db.TimeFrames.AddRange(timeFrames);
         return this;
     }
+
+    public TestDataBuilder WithProjects(IEnumerable<Project> projects)
+    {
+        db.Projects.AddRange(projects);
+        return this;
+    }
 }

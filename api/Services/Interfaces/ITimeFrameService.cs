@@ -7,5 +7,5 @@ public interface ITimeFrameService
 {
     Task<IEnumerable<TimeFrame>> Get();
     Task<TimeFrame> Create(TimeFrameCreateDTO timeFrame);
-    Task<TimeFrame> End(int timeFrameId, TimeFrameEndDTO timeFrame);
+    Task<TimeFrame> Patch(int timeFrameId, TimeFramePatchDTO timeFrame);
 }

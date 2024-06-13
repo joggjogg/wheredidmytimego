@@ -6,6 +6,7 @@ namespace api.Model;
 public class ApplicationContext : DbContext
 {
     public virtual DbSet<TimeFrame> TimeFrames { get; set; }
+    public virtual DbSet<Project> Projects { get; set; }
 
     public ApplicationContext()
     {
@@ -26,5 +27,12 @@ public class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<TimeFrame>(entity =>
+        {
+            entity.HasOne(e => e.Project)
+                .WithMany()
+                .HasForeignKey(e => e.ProjectId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
     }
 }

@@ -104,13 +104,13 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         });
         await Db.SaveChangesAsync();
         const int timeFrameId = 1;
-        var data = new TimeFrameEndDTO()
+        var data = new TimeFramePatchDTO()
         {
             TimeFrameEnd = DateTime.Parse("2024-06-11 11:00:00"),
             TzName = "Europe/Luxembourg"
         };
 
-        var actual = await _sut.End(timeFrameId, data);
+        var actual = await _sut.Patch(timeFrameId, data);
         var expected = DateTime.Parse("2024-06-11 09:00:00");
 
         var timeFrame = Assert.IsType<TimeFrame>(actual);
@@ -128,13 +128,13 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         });
         await Db.SaveChangesAsync();
         const int timeFrameId = 1;
-        var data = new TimeFrameEndDTO()
+        var data = new TimeFramePatchDTO()
         {
             TimeFrameEnd = DateTime.Parse("2024-06-11 09:59:59"),
             TzName = "Europe/Luxembourg"
         };
 
-        await Assert.ThrowsAsync<InvalidTimeFrameException>(async () => await _sut.End(timeFrameId, data));
+        await Assert.ThrowsAsync<InvalidTimeFrameException>(async () => await _sut.Patch(timeFrameId, data));
     }
 
     [Fact]
@@ -142,12 +142,12 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
     {
         await ResetToBaseStateAsync();
         const int timeFrameId = 1;
-        var data = new TimeFrameEndDTO()
+        var data = new TimeFramePatchDTO()
         {
             TimeFrameEnd = DateTime.Parse("2024-06-11 09:59:59"),
             TzName = "Europe/Luxembourg"
         };
 
-        await Assert.ThrowsAsync<InvalidOperationException>(async () => await _sut.End(timeFrameId, data));
+        await Assert.ThrowsAsync<InvalidOperationException>(async () => await _sut.Patch(timeFrameId, data));
     }
 }

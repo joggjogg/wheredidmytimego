@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using TimeZoneConverter;
 using ILogger = Serilog.ILogger;
+#nullable enable
 
 namespace api.Services;
 
@@ -49,20 +50,34 @@ public class TimeFrameService : ITimeFrameService
         }
     }
 
-    public async Task<TimeFrame> End(int timeFrameId, TimeFrameEndDTO timeFrame)
+    public async Task<TimeFrame> Patch(int timeFrameId, TimeFramePatchDTO timeFrame)
     {
         try
         {
             var entity = await _timeFrameRepository.FirstAsync(t => t.TimeFrameId == timeFrameId);
-            var universalTime = ToUniversalTime(timeFrame.TimeFrameEnd, timeFrame.TzName);
-            if (universalTime < entity.TimeFrameStart)
+            
+            if (timeFrame.TimeFrameEnd != null && timeFrame.TzName != null)
             {
-                throw new InvalidTimeFrameException(
-                    $"TimeFrameEnd {universalTime.ToShortDateString()} cannot be before TimeFrameStart {entity.TimeFrameStart.ToShortDateString()}");
+                var universalTime = ToUniversalTime(timeFrame.TimeFrameEnd.Value, timeFrame.TzName);
+                if (universalTime < entity.TimeFrameStart)
+                {
+                    throw new InvalidTimeFrameException(
+                        $"TimeFrameEnd {universalTime.ToShortDateString()} cannot be before TimeFrameStart {entity.TimeFrameStart.ToShortDateString()}");
+                }
+
+                entity.TimeFrameEnd = universalTime;
             }
 
-            entity.TimeFrameEnd = universalTime;
+            if (timeFrame.ProjectId != null)
+            {
+                entity.ProjectId = timeFrame.ProjectId.Value;
+            }
 
+            if (timeFrame.Description != null)
+            {
+                entity.Description = timeFrame.Description;
+            }
+            
             var entry = _timeFrameRepository.Attach(entity);
             entry.State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
