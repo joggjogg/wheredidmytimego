@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  db:
+    container_name: wheredidmytimego.db
+    image: postgres:16
+    restart: always
+    ports:
+      - 5433:5432
+    volumes:
+      - wheredidmytimego-db:/var/lib/postgresql/data
+    env_file:
+      - .env
+volumes:
+  wheredidmytimego-db: null
