@@ -30,7 +30,7 @@ public class ApplicationContext : DbContext
         modelBuilder.Entity<TimeFrame>(entity =>
         {
             entity.HasOne(e => e.Project)
-                .WithMany()
+                .WithMany() 
                 .HasForeignKey(e => e.ProjectId)
                 .OnDelete(DeleteBehavior.NoAction);
         });

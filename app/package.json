@@ -11,6 +11,9 @@
     "lint": "eslint --ignore-path .gitignore . --ext ts --ext tsx --ext js --ext jsx"
   },
   "dependencies": {
+    "@mantine/core": "^7.10.2",
+    "@mantine/hooks": "^7.10.2",
+    "@tabler/icons-react": "^3.6.0",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18"
@@ -27,6 +30,7 @@
     "eslint-plugin-react": "7.34.1",
     "eslint-plugin-react-hooks": "4.6.2",
     "eslint-plugin-unused-imports": "3.2.0",
+    "postcss-preset-mantine": "^1.15.0",
     "prettier": "3.2.5",
     "typescript": "^5"
   }
