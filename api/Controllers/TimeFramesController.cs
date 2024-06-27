@@ -6,11 +6,11 @@ namespace api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class TimeFrameController : ControllerBase
+public class TimeFramesController : ControllerBase
 {
     private readonly ITimeFrameService _timeFrameService;
 
-    public TimeFrameController(ITimeFrameService timeFrameService)
+    public TimeFramesController(ITimeFrameService timeFrameService)
     {
         _timeFrameService = timeFrameService;
     }

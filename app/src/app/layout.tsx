@@ -18,6 +18,7 @@ import {
 import './globals.css'
 import classes from './layout.module.css'
 import '@mantine/core/styles.css'
+import StoreProvider from './storeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -52,43 +53,45 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MantineProvider>
-          <section id={classes.app}>
-            <nav className={classes.navbar}>
-              <div className={classes.navbarMain}>
+        <StoreProvider>
+          <MantineProvider>
+            <section id={classes.app}>
+              <nav className={classes.navbar}>
+                <div className={classes.navbarMain}>
+                  <Stack justify="center" gap={0}>
+                    <NavbarLink label="Dashboard" href="/dashboard">
+                      <IconHome
+                        style={{ width: rem(20), height: rem(20) }}
+                        stroke={1.5}
+                      />
+                    </NavbarLink>
+                    <NavbarLink label="Projects" href="/projects">
+                      <IconClipboardList
+                        style={{ width: rem(20), height: rem(20) }}
+                        stroke={1.5}
+                      />
+                    </NavbarLink>
+                    <NavbarLink label="Time frames" href="/timeframes">
+                      <IconClock
+                        style={{ width: rem(20), height: rem(20) }}
+                        stroke={1.5}
+                      />
+                    </NavbarLink>
+                  </Stack>
+                </div>
                 <Stack justify="center" gap={0}>
-                  <NavbarLink label="Dashboard" href="/dashboard">
-                    <IconHome
-                      style={{ width: rem(20), height: rem(20) }}
-                      stroke={1.5}
-                    />
-                  </NavbarLink>
-                  <NavbarLink label="Projects" href="/projects">
-                    <IconClipboardList
-                      style={{ width: rem(20), height: rem(20) }}
-                      stroke={1.5}
-                    />
-                  </NavbarLink>
-                  <NavbarLink label="Time frames" href="/timeframes">
-                    <IconClock
+                  <NavbarLink label="Logout" href="/logout">
+                    <IconLogout
                       style={{ width: rem(20), height: rem(20) }}
                       stroke={1.5}
                     />
                   </NavbarLink>
                 </Stack>
-              </div>
-              <Stack justify="center" gap={0}>
-                <NavbarLink label="Logout" href="/logout">
-                  <IconLogout
-                    style={{ width: rem(20), height: rem(20) }}
-                    stroke={1.5}
-                  />
-                </NavbarLink>
-              </Stack>
-            </nav>
-            <section id={classes.content}>{children}</section>
-          </section>
-        </MantineProvider>
+              </nav>
+              <section id={classes.content}>{children}</section>
+            </section>
+          </MantineProvider>
+        </StoreProvider>
       </body>
     </html>
   )

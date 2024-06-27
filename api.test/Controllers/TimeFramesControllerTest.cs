@@ -8,12 +8,12 @@ using Xunit;
 
 namespace api.test.Controllers;
 
-public class TimeFrameControllerTest
+public class TimeFramesControllerTest
 {
     private readonly Mock<ITimeFrameService> _timeFrameServiceMock;
-    private readonly TimeFrameController _sut;
+    private readonly TimeFramesController _sut;
 
-    public TimeFrameControllerTest()
+    public TimeFramesControllerTest()
     {
         _timeFrameServiceMock = new();
         _sut = new(_timeFrameServiceMock.Object);

@@ -6,11 +6,11 @@ namespace api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ProjectController: ControllerBase
+public class ProjectsController: ControllerBase
 {
     private readonly IProjectService _projectService;
 
-    public ProjectController(IProjectService projectService)
+    public ProjectsController(IProjectService projectService)
     {
         _projectService = projectService;
     }

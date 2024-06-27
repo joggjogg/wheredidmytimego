@@ -8,15 +8,15 @@ using Xunit;
 
 namespace api.test.Controllers;
 
-public class ProjectControllerTest
+public class ProjectsControllerTest
 {
     private readonly Mock<IProjectService> _projectServiceMock;
-    private readonly ProjectController _sut;
+    private readonly ProjectsController _sut;
 
-    public ProjectControllerTest()
+    public ProjectsControllerTest()
     {
         _projectServiceMock = new();
-        _sut = new ProjectController(_projectServiceMock.Object);
+        _sut = new ProjectsController(_projectServiceMock.Object);
     }
 
     [Fact]
