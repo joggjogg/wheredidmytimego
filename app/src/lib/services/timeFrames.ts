@@ -4,6 +4,7 @@ export interface TimeFrame {
   timeFrameId: number
   timeFrameStart: string
   timeFrameEnd?: string
+  tzName: string
   description?: string
   projectId?: number
 }
@@ -25,7 +26,7 @@ export const timeFramesApi = api.injectEndpoints({
       query: body => ({
         url: `timeFrames`,
         method: 'POST',
-        body,
+        body: JSON.stringify(body),
       }),
       invalidatesTags: [{ type: 'TimeFrames', id: 'LIST' }],
     }),

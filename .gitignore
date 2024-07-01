@@ -6,8 +6,4 @@ riderModule.iml
 .env
 .DS_Store
 .vscode/settings.json
-.idea/.idea.wheredidmytimego/.idea/.name
-.idea/.idea.wheredidmytimego/.idea/indexLayout.xml
-.idea/.idea.wheredidmytimego/.idea/projectSettingsUpdater.xml
-.idea/.idea.wheredidmytimego/.idea/vcs.xml
-.idea/.idea.wheredidmytimego/.idea/workspace.xml
+.idea/

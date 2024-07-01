@@ -1,8 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Button, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core'
+import { Box, Button, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core'
 import classes from './timeframes.module.css'
+import TimeFrameStart from './components/TimeFrameStart'
 
 const PRIMARY_COL_HEIGHT = rem(600)
 
@@ -26,14 +27,9 @@ export default function Timeframes() {
             />
           </Grid.Col>
           <Grid.Col span={6}>
-            <Button
-              color="#dfe2e6"
-              w={'100%'}
-              h={SECONDARY_COL_HEIGHT}
-              radius="md"
-            >
-              Start
-            </Button>
+            <Box h={SECONDARY_COL_HEIGHT}>
+              <TimeFrameStart />
+            </Box>
           </Grid.Col>
           <Grid.Col span={6}>
             <Button

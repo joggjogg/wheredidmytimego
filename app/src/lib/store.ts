@@ -1,8 +1,7 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit'
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { api } from './services/api'
 
-export const createStore = (
+export const makeStore = (
   options?: ConfigureStoreOptions['preloadedState'] | undefined,
 ) =>
   configureStore({
@@ -14,10 +13,6 @@ export const createStore = (
     ...options,
   })
 
-export const store = createStore()
-
-export type AppStore = ReturnType<typeof createStore>
-export type AppDispatch = typeof store.dispatch
-export const useAppDispatch: () => AppDispatch = useDispatch
-export type RootState = ReturnType<typeof store.getState>
-export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
+export type AppStore = ReturnType<typeof makeStore>
+export type RootState = ReturnType<AppStore['getState']>
+export type AppDispatch = AppStore['dispatch']

@@ -27,12 +27,12 @@ public class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TimeFrame>(entity =>
+        modelBuilder.Entity<Project>(entity =>
         {
-            entity.HasOne(e => e.Project)
-                .WithMany() 
+            entity.HasMany(e => e.TimeFrames)
+                .WithOne(e => e.Project)
                 .HasForeignKey(e => e.ProjectId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .IsRequired(false);
         });
     }
 }

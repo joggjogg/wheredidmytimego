@@ -10,7 +10,6 @@ public class TimeFrame
     [Required] public DateTime TimeFrameStart { get; set; }
     public DateTime? TimeFrameEnd { get; set; }
     [Column(TypeName = "text")] public string? Description { get; set; }
-    [Required]
-    public int ProjectId { get; set; }
-    public virtual Project Project { get; set; }
+    public int? ProjectId { get; set; }
+    public Project? Project { get; set; }
 }

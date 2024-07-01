@@ -1,6 +1,7 @@
 using api.Model;
 using api.Services;
 using api.Services.Interfaces;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace api;
@@ -23,6 +24,23 @@ public class Startup
             options.UseNpgsql(Configuration.GetConnectionString("Default"));
         });
 
+        services.AddCors(builder =>
+        {
+            builder.AddDefaultPolicy(policy =>
+            {
+                policy
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                if (Environment.IsDevelopment())
+                    policy.SetIsOriginAllowed(origin => true);
+                else
+                {
+                    policy.WithOrigins("https://wheredidmytimego.io");
+                  
+                }
+            });
+        });
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
@@ -40,6 +58,7 @@ public class Startup
             app.UseSwaggerUI();
         }
 
+        app.UseCors();
         app.UseForwardedHeaders();
         app.UseResponseCaching();
         app.UseRouting();
@@ -49,6 +68,8 @@ public class Startup
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         using var scope = scopeFactory.CreateScope();
         ApplyMigrations(scope.ServiceProvider.GetRequiredService<ApplicationContext>());
+        
+        
     }
 
     public void ApplyMigrations(ApplicationContext applicationContext)
