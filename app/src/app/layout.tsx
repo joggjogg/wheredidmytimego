@@ -19,6 +19,8 @@ import './globals.css'
 import classes from './layout.module.css'
 import '@mantine/core/styles.css'
 import StoreProvider from './storeProvider'
+import { Notifications } from '@mantine/notifications'
+import '@mantine/notifications/styles.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -55,6 +57,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider>
           <MantineProvider>
+            <Notifications />
             <section id={classes.app}>
               <nav className={classes.navbar}>
                 <div className={classes.navbarMain}>
