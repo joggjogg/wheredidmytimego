@@ -14,7 +14,7 @@ public class Startup
         Environment = env;
     }
 
-   private IConfiguration Configuration { get; }
+    private IConfiguration Configuration { get; }
     private IWebHostEnvironment Environment { get; }
 
     public void ConfigureServices(IServiceCollection services)
@@ -37,7 +37,6 @@ public class Startup
                 else
                 {
                     policy.WithOrigins("https://wheredidmytimego.io");
-                  
                 }
             });
         });
@@ -64,12 +63,10 @@ public class Startup
         app.UseRouting();
         app.UseAuthorization();
         app.UseHttpsRedirection();
-        
+
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         using var scope = scopeFactory.CreateScope();
         ApplyMigrations(scope.ServiceProvider.GetRequiredService<ApplicationContext>());
-        
-        
     }
 
     public void ApplyMigrations(ApplicationContext applicationContext)

@@ -25,6 +25,10 @@ public class TimeFramesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(TimeFrameCreateDTO data)
     {
+        if (await _timeFrameService.HasRunningTimeFrame())
+        {
+            return Conflict(error: "There is already a TimeFrame active");
+        }
         var entity = await _timeFrameService.Create(data);
         return Created($"/timeframes/{entity.TimeFrameId}", entity);
     }

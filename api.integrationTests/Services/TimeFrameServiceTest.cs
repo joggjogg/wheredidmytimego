@@ -150,4 +150,37 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
 
         await Assert.ThrowsAsync<InvalidOperationException>(async () => await _sut.Patch(timeFrameId, data));
     }
+
+    [Fact]
+    public async Task HasRunningTimeFrame_WithRunningTimeFrame_ReturnsTrue()
+    {
+        await ResetToBaseStateAsync();
+        Db.TimeFrames.Add(new TimeFrame()
+        {
+            TimeFrameId = 1,
+            TimeFrameStart = DateTime.Parse("2024-06-11 10:00:00").ToUniversalTime()
+        });
+        await Db.SaveChangesAsync();
+
+        var result = await _sut.HasRunningTimeFrame();
+        
+        Assert.True(result);
+    }
+
+    [Fact]
+    public async Task HasRunningTimeFrame_WithEndedTimeFrame_ReturnsFalse()
+    {
+        await ResetToBaseStateAsync();
+        Db.TimeFrames.Add(new TimeFrame()
+        {
+            TimeFrameId = 1,
+            TimeFrameStart = DateTime.Parse("2024-06-11 10:00:00").ToUniversalTime(),
+            TimeFrameEnd = DateTime.Parse("2024-06-11 12:00:00").ToUniversalTime()
+        });
+        await Db.SaveChangesAsync();
+
+        var result = await _sut.HasRunningTimeFrame();
+        
+        Assert.False(result);
+    }
 }

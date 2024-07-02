@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using TimeZoneConverter;
 using ILogger = Serilog.ILogger;
+
 #nullable enable
 
 namespace api.Services;
@@ -39,7 +40,6 @@ public class TimeFrameService : ITimeFrameService
 
             var entity = timeFrame.Adapt<TimeFrame>();
             var entry = _timeFrameRepository.Add(entity);
-
             await _applicationContext.SaveChangesAsync();
             return entry.Entity;
         }
@@ -55,7 +55,7 @@ public class TimeFrameService : ITimeFrameService
         try
         {
             var entity = await _timeFrameRepository.FirstAsync(t => t.TimeFrameId == timeFrameId);
-            
+
             if (timeFrame.TimeFrameEnd != null && timeFrame.TzName != null)
             {
                 var universalTime = ToUniversalTime(timeFrame.TimeFrameEnd.Value, timeFrame.TzName);
@@ -77,7 +77,7 @@ public class TimeFrameService : ITimeFrameService
             {
                 entity.Description = timeFrame.Description;
             }
-            
+
             var entry = _timeFrameRepository.Attach(entity);
             entry.State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
@@ -94,5 +94,10 @@ public class TimeFrameService : ITimeFrameService
     {
         return TimeZoneInfo.ConvertTimeToUtc(dateTime,
             TZConvert.GetTimeZoneInfo(tzName));
+    }
+
+    public async Task<bool> HasRunningTimeFrame()
+    {
+        return await _timeFrameRepository.Where(t => t.TimeFrameEnd == null).AnyAsync();
     }
 }

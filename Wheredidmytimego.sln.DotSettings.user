@@ -6,5 +6,6 @@
     &lt;TestId&gt;xUnit::4B91FAE4-82E2-49F7-AF12-A3CA3FBBE790::net8.0::api.integrationTests.Services.ProjectServiceTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::7C62BA34-8850-4FF7-ADFF-A3013AFF586A::net8.0::api.test.Controllers.ProjectControllerTest.Get_ReturnsOkObjectResult&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::7C62BA34-8850-4FF7-ADFF-A3013AFF586A::net8.0::api.test.Controllers.ProjectControllerTest.Post_ReturnsCreatedObjectResult&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::7C62BA34-8850-4FF7-ADFF-A3013AFF586A::net8.0::api.test.Controllers.TimeFramesControllerTest.Post_WithRunningTimeFrame_ReturnsConflictObjectResult&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

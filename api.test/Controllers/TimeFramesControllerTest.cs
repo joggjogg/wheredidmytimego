@@ -63,4 +63,19 @@ public class TimeFramesControllerTest
         var okObjectResult = Assert.IsType<OkObjectResult>(actual);
         Assert.IsType<TimeFrame>(okObjectResult.Value);
     }
+
+    [Fact]
+    public async Task Post_WithRunningTimeFrame_ReturnsConflictObjectResult()
+    {
+        var data = new TimeFrameCreateDTO()
+        {
+            TimeFrameStart = DateTime.Parse("2024-06-12 10:52:32"),
+            TzName = "Europe/Luxembourg"
+        };
+        _timeFrameServiceMock.Setup(m => m.HasRunningTimeFrame()).ReturnsAsync(true);
+
+        var actual = await _sut.Post(data);
+
+        Assert.IsType<ConflictObjectResult>(actual);
+    }
 }
