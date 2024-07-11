@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://localhost:7298',
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: (headers, {}) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
     // const token = (getState() as RootState).auth.token
     // if (token) {

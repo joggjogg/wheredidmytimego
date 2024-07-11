@@ -22,13 +22,26 @@ public class TimeFramesController : ControllerBase
         return Ok(data);
     }
 
+    [HttpGet("active")]
+    public async Task<IActionResult> GetActiveTimeFrame()
+    {
+        var timeFrame = await _timeFrameService.GetActiveTimeFrame();
+        if (timeFrame == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(timeFrame);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post(TimeFrameCreateDTO data)
     {
-        if (await _timeFrameService.HasRunningTimeFrame())
+        if (await _timeFrameService.HasActiveTimeFrame())
         {
             return Conflict(error: "There is already a TimeFrame active");
         }
+
         var entity = await _timeFrameService.Create(data);
         return Created($"/timeframes/{entity.TimeFrameId}", entity);
     }

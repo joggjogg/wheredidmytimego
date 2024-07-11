@@ -5,6 +5,8 @@ import { Box, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core'
 import classes from './timeframes.module.css'
 import TimeFrameStart from './components/TimeFrameStart'
 import TimeFrameStop from './components/TimeFrameStop'
+import TimeFrameActive from './components/TimeFrameActive'
+import styles from './timeFrames.module.css'
 
 const PRIMARY_COL_HEIGHT = rem(600)
 
@@ -21,11 +23,9 @@ export default function Timeframes() {
       >
         <Grid gutter="md">
           <Grid.Col>
-            <Skeleton
-              height={SECONDARY_COL_HEIGHT}
-              radius="md"
-              animate={false}
-            />
+            <Box className={styles.timeFrameActive} h={SECONDARY_COL_HEIGHT}>
+              <TimeFrameActive />
+            </Box>
           </Grid.Col>
           <Grid.Col span={6}>
             <Box h={SECONDARY_COL_HEIGHT}>

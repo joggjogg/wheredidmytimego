@@ -53,7 +53,7 @@ const TimeFrameStop = () => {
   }
   return (
     <>
-      <Modal opened={opened} onClose={close} title="End TimeFrame">
+      <Modal opened={opened} onClose={close} centered title="End TimeFrame">
         <form onSubmit={handleSumbit}>
           <TextInput
             withAsterisk

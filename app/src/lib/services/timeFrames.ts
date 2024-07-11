@@ -22,6 +22,16 @@ export const timeFramesApi = api.injectEndpoints({
         { type: 'TimeFrames' as const, id: 'LIST' },
       ],
     }),
+    getTimeFrame: build.query<TimeFrame, number>({
+      query: timeFrameId => ({ url: `timeFrames/${timeFrameId}` }),
+      providesTags: (_result, _err, timeFrameId) => [
+        { type: 'TimeFrames', timeFrameId },
+      ],
+    }),
+    getActiveTimeFrame: build.query<TimeFrame, void>({
+      query: () => ({ url: 'timeFrames/active' }),
+      providesTags: (_result, _err) => [{ type: 'TimeFrames' }],
+    }),
     addTimeFrame: build.mutation<TimeFrame, Partial<TimeFrame>>({
       query: body => ({
         url: `timeFrames`,
@@ -29,12 +39,6 @@ export const timeFramesApi = api.injectEndpoints({
         body: JSON.stringify(body),
       }),
       invalidatesTags: [{ type: 'TimeFrames', id: 'LIST' }],
-    }),
-    getTimeFrame: build.query<TimeFrame, number>({
-      query: timeFrameId => `timeframes${timeFrameId}`,
-      providesTags: (_timeFrames, _err, timeFrameId) => [
-        { type: 'TimeFrames', timeFrameId },
-      ],
     }),
     updateTimeFrame: build.mutation<TimeFrame, Partial<TimeFrame>>({
       query(data) {
@@ -54,7 +58,8 @@ export const timeFramesApi = api.injectEndpoints({
 
 export const {
   useGetTimeFramesQuery,
-  useAddTimeFrameMutation,
   useGetTimeFrameQuery,
+  useGetActiveTimeFrameQuery,
+  useAddTimeFrameMutation,
   useUpdateTimeFrameMutation,
 } = timeFramesApi

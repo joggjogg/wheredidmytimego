@@ -7,5 +7,7 @@
     &lt;TestId&gt;xUnit::7C62BA34-8850-4FF7-ADFF-A3013AFF586A::net8.0::api.test.Controllers.ProjectControllerTest.Get_ReturnsOkObjectResult&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::7C62BA34-8850-4FF7-ADFF-A3013AFF586A::net8.0::api.test.Controllers.ProjectControllerTest.Post_ReturnsCreatedObjectResult&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::7C62BA34-8850-4FF7-ADFF-A3013AFF586A::net8.0::api.test.Controllers.TimeFramesControllerTest.Post_WithRunningTimeFrame_ReturnsConflictObjectResult&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::7C62BA34-8850-4FF7-ADFF-A3013AFF586A::net8.0::api.test.Controllers.TimeFramesControllerTest.GetActiveTimeFrame_WithActiveTimeFrame_ReturnsOk&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::7C62BA34-8850-4FF7-ADFF-A3013AFF586A::net8.0::api.test.Controllers.TimeFramesControllerTest.GetActiveTimeFrame_WithNoActiveTimeFrame_ReturnsNotFound&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

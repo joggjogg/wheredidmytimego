@@ -162,13 +162,13 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         });
         await Db.SaveChangesAsync();
 
-        var result = await _sut.HasRunningTimeFrame();
+        var result = await _sut.HasActiveTimeFrame();
         
         Assert.True(result);
     }
 
     [Fact]
-    public async Task HasRunningTimeFrame_WithEndedTimeFrame_ReturnsFalse()
+    public async Task HasActiveTimeFrame_WithEndedTimeFrame_ReturnsFalse()
     {
         await ResetToBaseStateAsync();
         Db.TimeFrames.Add(new TimeFrame()
@@ -179,8 +179,32 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         });
         await Db.SaveChangesAsync();
 
-        var result = await _sut.HasRunningTimeFrame();
+        var result = await _sut.HasActiveTimeFrame();
         
         Assert.False(result);
+    }
+
+    [Fact]
+    public async Task GetRunningTimeFrame_ReturnsTimeFrameWithNoTimeFrameEnd()
+    {
+        await ResetToBaseStateAsync();
+        Db.TimeFrames.Add(new TimeFrame()
+        {
+            TimeFrameId = 1,
+            TimeFrameStart = DateTime.Parse("2024-06-11 10:00:00").ToUniversalTime(),
+            TimeFrameEnd = DateTime.Parse("2024-06-11 12:00:00").ToUniversalTime()
+        });
+        Db.TimeFrames.Add(new TimeFrame()
+        {
+            TimeFrameId = 2,
+            TimeFrameStart = DateTime.Parse("2024-06-11 10:00:00").ToUniversalTime(),
+        });
+        await Db.SaveChangesAsync();
+
+        var result = await _sut.GetActiveTimeFrame();
+        const int expected = 2;
+        
+        Assert.Equal(expected, result.TimeFrameId);
+        Assert.Null(result.TimeFrameEnd);
     }
 }

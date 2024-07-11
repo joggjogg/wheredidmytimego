@@ -31,6 +31,11 @@ public class TimeFrameService : ITimeFrameService
         return await _timeFrameRepository.ToListAsync();
     }
 
+    public async Task<TimeFrame?> GetActiveTimeFrame()
+    {
+        return await _timeFrameRepository.FirstOrDefaultAsync(t => t.TimeFrameEnd == null);
+    }
+
     public async Task<TimeFrame> Create(TimeFrameCreateDTO timeFrame)
     {
         try
@@ -96,7 +101,7 @@ public class TimeFrameService : ITimeFrameService
             TZConvert.GetTimeZoneInfo(tzName));
     }
 
-    public async Task<bool> HasRunningTimeFrame()
+    public async Task<bool> HasActiveTimeFrame()
     {
         return await _timeFrameRepository.Where(t => t.TimeFrameEnd == null).AnyAsync();
     }
