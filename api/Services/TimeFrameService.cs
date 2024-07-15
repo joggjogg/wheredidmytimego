@@ -61,7 +61,7 @@ public class TimeFrameService : ITimeFrameService
         {
             var entity = await _timeFrameRepository.FirstAsync(t => t.TimeFrameId == timeFrameId);
 
-            if (timeFrame.TimeFrameEnd != null && timeFrame.TzName != null)
+            if (timeFrame is { TimeFrameEnd: not null, TzName: not null })
             {
                 var universalTime = ToUniversalTime(timeFrame.TimeFrameEnd.Value, timeFrame.TzName);
                 if (universalTime < entity.TimeFrameStart)

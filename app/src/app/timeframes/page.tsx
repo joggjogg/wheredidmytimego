@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Box, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core'
-import classes from './timeframes.module.css'
 import TimeFrameStart from './components/TimeFrameStart'
 import TimeFrameStop from './components/TimeFrameStop'
 import TimeFrameActive from './components/TimeFrameActive'
@@ -17,7 +16,7 @@ export default function Timeframes() {
     <>
       <h1>Timeframes</h1>
       <SimpleGrid
-        className={classes.grid}
+        className={styles.grid}
         cols={{ base: 1, sm: 2 }}
         spacing="md"
       >

@@ -38,7 +38,9 @@ export const timeFramesApi = api.injectEndpoints({
         method: 'POST',
         body: JSON.stringify(body),
       }),
-      invalidatesTags: [{ type: 'TimeFrames', id: 'LIST' }],
+      invalidatesTags: timeFrame => [
+        { type: 'TimeFrames', timeFrameId: timeFrame?.timeFrameId },
+      ],
     }),
     updateTimeFrame: build.mutation<TimeFrame, Partial<TimeFrame>>({
       query(data) {
@@ -46,7 +48,7 @@ export const timeFramesApi = api.injectEndpoints({
         return {
           url: `timeFrames/${timeFrameId}`,
           method: 'PATCH',
-          body,
+          body: JSON.stringify(body),
         }
       },
       invalidatesTags: timeFrame => [

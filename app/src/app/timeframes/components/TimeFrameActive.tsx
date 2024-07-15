@@ -5,21 +5,36 @@ import { Skeleton, Stack, Text } from '@mantine/core'
 import styles from './timeFrameActive.module.css'
 
 const TimeFrameActive = () => {
-  const { data: timeFrame, isLoading, isSuccess } = useGetActiveTimeFrameQuery()
+  const {
+    data: timeFrame,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useGetActiveTimeFrameQuery()
 
-  const { timeElapsed } = useTimeElapsed({
-    timeStart: timeFrame ? new Date(timeFrame.timeFrameStart) : new Date(),
-  })
+  const { timeElapsed } = useTimeElapsed({})
 
   return (
     <>
       {isLoading && <Skeleton height={'100%'} radius="md" />}
+      {isError && (
+        <Stack>
+          <Text p="md" size="xl">
+            No active TimeFrame
+          </Text>
+        </Stack>
+      )}
       {isSuccess && !timeFrame && <Text>No active TimeFrame</Text>}
       {isSuccess && (
-        <Stack gap={0} p={'md'}>
+        <Stack h={'100%'} gap={0} p={'md'}>
           <Text size="xl">Active</Text>
-          <Text className={styles.timeElapsed}>{timeElapsed}</Text>
-          <Text size="sm">Started on {`${timeFrame.timeFrameStart}`}</Text>
+          <Text className={styles.timeElapsed}>
+            {timeFrame && timeElapsed(timeFrame.timeFrameStart)}
+          </Text>
+          <Text size="sm">
+            Started on{' '}
+            {`${new Date(timeFrame.timeFrameStart).toLocaleTimeString()}`}
+          </Text>
         </Stack>
       )}
     </>

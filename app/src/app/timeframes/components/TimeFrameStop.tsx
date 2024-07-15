@@ -1,4 +1,7 @@
-import { useUpdateTimeFrameMutation } from '@/lib/services/timeFrames'
+import {
+  useGetActiveTimeFrameQuery,
+  useUpdateTimeFrameMutation,
+} from '@/lib/services/timeFrames'
 import { toDateString } from '@/lib/util/dates'
 import { Button, Modal, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
@@ -8,6 +11,11 @@ import { IconCheck, IconX } from '@tabler/icons-react'
 import React from 'react'
 
 const TimeFrameStop = () => {
+  const {
+    data: activeTimeFrame,
+    isLoading: activeTimeFrameIsLoading,
+    isSuccess: activeTimeFrameIsSuccess,
+  } = useGetActiveTimeFrameQuery()
   const [updateTimeFrameMutation, { isLoading }] = useUpdateTimeFrameMutation()
   const [opened, { open, close }] = useDisclosure(false)
 
@@ -24,10 +32,24 @@ const TimeFrameStop = () => {
   })
 
   const handleSumbit = form.onSubmit(async values => {
+    if (activeTimeFrameIsSuccess && activeTimeFrame == undefined) {
+      notifications.show({
+        color: 'red',
+        title: 'Error',
+        icon: <IconX />,
+        withBorder: true,
+        message: 'There is no active TimeFrame to stop.',
+      })
+      return
+    }
+
     const result = await updateTimeFrameMutation({
+      timeFrameId: activeTimeFrame?.timeFrameId,
       timeFrameEnd: toDateString(new Date()),
+      tzName: Intl.DateTimeFormat().resolvedOptions().timeZone,
       description: values.description,
     })
+
     if (result.error) {
       notifications.show({
         color: 'red',
@@ -38,6 +60,7 @@ const TimeFrameStop = () => {
       })
       return
     }
+
     notifications.show({
       color: 'green',
       title: 'Success',
@@ -45,6 +68,8 @@ const TimeFrameStop = () => {
       message: 'Stopped TimeFrame',
       withBorder: true,
     })
+    form.reset()
+    close()
   })
 
   const handleClick = async (e: React.MouseEvent<HTMLElement>) => {
@@ -53,7 +78,7 @@ const TimeFrameStop = () => {
   }
   return (
     <>
-      <Modal opened={opened} onClose={close} centered title="End TimeFrame">
+      <Modal opened={opened} onClose={close} centered title="Stop TimeFrame">
         <form onSubmit={handleSumbit}>
           <TextInput
             withAsterisk
@@ -72,6 +97,7 @@ const TimeFrameStop = () => {
         w={'100%'}
         h={'100%'}
         radius="md"
+        disabled={activeTimeFrame == undefined || activeTimeFrameIsLoading}
         onClick={handleClick}
       >
         {isLoading ? 'Loading' : 'Stop'}
