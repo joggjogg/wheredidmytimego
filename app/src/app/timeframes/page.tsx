@@ -1,11 +1,12 @@
 'use client'
 
 import React from 'react'
-import { Box, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core'
+import { Box, Grid, SimpleGrid, rem } from '@mantine/core'
 import TimeFrameStart from './components/TimeFrameStart'
 import TimeFrameStop from './components/TimeFrameStop'
 import TimeFrameActive from './components/TimeFrameActive'
 import styles from './timeFrames.module.css'
+import TimeFrameList from './components/TimeFrameList'
 
 const PRIMARY_COL_HEIGHT = rem(600)
 
@@ -22,7 +23,7 @@ export default function Timeframes() {
       >
         <Grid gutter="md">
           <Grid.Col>
-            <Box className={styles.timeFrameActive} h={SECONDARY_COL_HEIGHT}>
+            <Box className={styles.box} h={SECONDARY_COL_HEIGHT}>
               <TimeFrameActive />
             </Box>
           </Grid.Col>
@@ -37,8 +38,9 @@ export default function Timeframes() {
             </Box>
           </Grid.Col>
         </Grid>
-        <Skeleton radius="md" h={PRIMARY_COL_HEIGHT} animate={false} />
-        {/* // <TimeFrameTable /> */}
+        <Box className={styles.box} h={PRIMARY_COL_HEIGHT}>
+          <TimeFrameList />
+        </Box>
       </SimpleGrid>
     </>
   )
