@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import { useGetTimeFramesQuery } from '@/lib/services/timeFrames'
 import { Skeleton, Stack, Table, Text } from '@mantine/core'
 import { toDateString } from '@/lib/util/dates'
+import styles from './timeFrameList.module.css'
 
 const TimeFrameList = () => {
   const {
@@ -18,7 +19,7 @@ const TimeFrameList = () => {
   }, [timeFrames])
 
   return (
-    <div>
+    <div className={styles.container}>
       {isLoading && <Skeleton radius="md" h={'100%'} animate />}
       {isError && (
         <Stack>

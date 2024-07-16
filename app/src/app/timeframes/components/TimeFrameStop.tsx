@@ -94,8 +94,6 @@ const TimeFrameStop = () => {
       </Modal>
       <Button
         color="#dfe2e6"
-        w={'100%'}
-        h={'100%'}
         radius="md"
         disabled={activeTimeFrame == undefined || activeTimeFrameIsLoading}
         onClick={handleClick}
