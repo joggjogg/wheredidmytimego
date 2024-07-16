@@ -18,7 +18,7 @@ public class TimeFramesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var data = await _timeFrameService.Get();
+        var data = await _timeFrameService.GetTimeFrame();
         return Ok(data);
     }
 
@@ -33,6 +33,19 @@ public class TimeFramesController : ControllerBase
 
         return Ok(timeFrame);
     }
+
+    [HttpGet("{timeFrameId:int}")]
+    public async Task<IActionResult> GetTimeFrame(int timeFrameId)
+    {
+        var timeFrame = await _timeFrameService.GetTimeFrame(timeFrameId);
+        if (timeFrame == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(timeFrame);
+    }
+    
 
     [HttpPost]
     public async Task<IActionResult> Post(TimeFrameCreateDTO data)

@@ -26,7 +26,7 @@ public class TimeFrameService : ITimeFrameService
         _timeFrameRepository = applicationContext.Set<TimeFrame>();
     }
 
-    public async Task<IEnumerable<TimeFrame>> Get()
+    public async Task<IEnumerable<TimeFrame>> GetTimeFrame()
     {
         return await _timeFrameRepository.ToListAsync();
     }
@@ -34,6 +34,11 @@ public class TimeFrameService : ITimeFrameService
     public async Task<TimeFrame?> GetActiveTimeFrame()
     {
         return await _timeFrameRepository.FirstOrDefaultAsync(t => t.TimeFrameEnd == null);
+    }
+
+    public async Task<TimeFrame?> GetTimeFrame(int timeFrameId)
+    {
+        return await _timeFrameRepository.FirstOrDefaultAsync(t => t.TimeFrameId == timeFrameId);
     }
 
     public async Task<TimeFrame> Create(TimeFrameCreateDTO timeFrame)

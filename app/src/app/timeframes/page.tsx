@@ -5,7 +5,6 @@ import React from 'react'
 import TimeFrameActive from './components/TimeFrameActive'
 import TimeFrameStart from './components/TimeFrameStart'
 import TimeFrameStop from './components/TimeFrameStop'
-import TimeFrameDetail from './components/TimeFrameDetail'
 import TimeFrameList from './components/TimeFrameList'
 import styles from './timeFrames.module.css'
 
@@ -19,7 +18,6 @@ export default function Timeframes() {
         align="start"
         justify="space-between"
         className={styles.container}
-        pb={'xl'}
       >
         <Stack align="stretch" justify="flex-start">
           <TimeFrameActive />
@@ -27,7 +25,6 @@ export default function Timeframes() {
             <TimeFrameStart />
             <TimeFrameStop />
           </Group>
-          <TimeFrameDetail />
         </Stack>
         <TimeFrameList />
       </Group>

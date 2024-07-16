@@ -33,7 +33,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         });
         await Db.SaveChangesAsync();
 
-        var actual = await _sut.Get();
+        var actual = await _sut.GetTimeFrame();
 
         Assert.Collection(actual,
             frame =>
@@ -206,5 +206,35 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         
         Assert.Equal(expected, result.TimeFrameId);
         Assert.Null(result.TimeFrameEnd);
+    }
+
+    [Fact]
+    public async Task GetTimeFrame_WithValidTimeFrameId_ReturnsTimeFrame()
+    {
+        await ResetToBaseStateAsync();
+        const int timeFrameId = 1;
+        Db.TimeFrames.Add(new TimeFrame()
+        {
+            TimeFrameId = 1,
+            TimeFrameStart = DateTime.Parse("2024-06-11 10:00:00").ToUniversalTime(),
+            TimeFrameEnd = DateTime.Parse("2024-06-11 12:00:00").ToUniversalTime()
+        });
+        await Db.SaveChangesAsync();
+
+        var result = await _sut.GetTimeFrame(timeFrameId);
+
+        var timeFrame = Assert.IsType<TimeFrame>(result);
+        Assert.Equal(timeFrameId, timeFrame.TimeFrameId);
+    }
+    
+    [Fact]
+    public async Task GetTimeFrame_WithInValidTimeFrameId_ReturnsNull()
+    {
+        await ResetToBaseStateAsync();
+        const int timeFrameId = 1;
+
+        var result = await _sut.GetTimeFrame(timeFrameId);
+
+        Assert.Null(result);
     }
 }

@@ -3,6 +3,9 @@ import { useGetTimeFramesQuery } from '@/lib/services/timeFrames'
 import { Skeleton, Stack, Table, Text } from '@mantine/core'
 import { toDateString } from '@/lib/util/dates'
 import styles from './timeFrameList.module.css'
+import { redirect } from 'next/navigation'
+import Link from 'next/link'
+import { IconExternalLink } from '@tabler/icons-react'
 
 const TimeFrameList = () => {
   const {
@@ -19,7 +22,7 @@ const TimeFrameList = () => {
   }, [timeFrames])
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} box`}>
       {isLoading && <Skeleton radius="md" h={'100%'} animate />}
       {isError && (
         <Stack>
@@ -36,12 +39,18 @@ const TimeFrameList = () => {
               <Table.Th>TimeFrameStart</Table.Th>
               <Table.Th>TimeFrameEnd</Table.Th>
               <Table.Th>Project</Table.Th>
+              <Table.Th>Link</Table.Th>
             </Table.Tr>
           </Table.Thead>
 
           <Table.Tbody>
             {sortedTimeFrames?.map(timeFrame => (
-              <Table.Tr key={timeFrame.timeFrameId}>
+              <Table.Tr
+                key={timeFrame.timeFrameId}
+                onClick={() => {
+                  redirect(`/timeframes/${timeFrame.timeFrameId}`)
+                }}
+              >
                 <Table.Td>date</Table.Td>
                 <Table.Td>
                   {toDateString(new Date(timeFrame.timeFrameStart))}
@@ -51,6 +60,11 @@ const TimeFrameList = () => {
                     toDateString(new Date(timeFrame.timeFrameEnd))}
                 </Table.Td>
                 <Table.Td>{timeFrame.projectId}</Table.Td>
+                <Table.Td>
+                  <Link href={`/timeframes/${timeFrame.timeFrameId}`}>
+                    <IconExternalLink />
+                  </Link>
+                </Table.Td>
               </Table.Tr>
             ))}
           </Table.Tbody>

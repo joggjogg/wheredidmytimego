@@ -23,7 +23,7 @@ public class TimeFramesControllerTest
     public async Task Get_ReturnsOkObjectResult()
     {
         TimeFrame[] timeFrames = [new TimeFrame()];
-        _timeFrameServiceMock.Setup(m => m.Get()).ReturnsAsync(timeFrames);
+        _timeFrameServiceMock.Setup(m => m.GetTimeFrame()).ReturnsAsync(timeFrames);
 
         var actual = await _sut.Get();
 
@@ -102,6 +102,34 @@ public class TimeFramesControllerTest
         
         var actual = await _sut.GetActiveTimeFrame();
 
+        Assert.IsType<NotFoundResult>(actual);
+    }
+
+    [Fact]
+    public async Task GetTimeFrame_WithValidTimeFrameId_ReturnsOkObjectResult()
+    {
+        const int timeFrameId = 1;
+        var timeFrame = new TimeFrame()
+        {
+            TimeFrameId = 1,
+            TimeFrameStart = DateTime.Parse("2024-06-12 10:52:32"),
+        };
+        _timeFrameServiceMock.Setup(m => m.GetTimeFrame(timeFrameId)).ReturnsAsync(timeFrame);
+
+        var actual = await _sut.GetTimeFrame(timeFrameId);
+
+        var okObjectResult = Assert.IsType<OkObjectResult>(actual);
+        Assert.IsType<TimeFrame>(okObjectResult.Value);
+    }
+
+    [Fact]
+    public async Task GetTimeFrame_WithNonValidTimeFrameId_ReturnsNotFoundResult()
+    {
+        const int timeFrameId = -1;
+        _timeFrameServiceMock.Setup(m => m.GetTimeFrame(timeFrameId)).ReturnsAsync((TimeFrame)null);
+
+        var actual = await _sut.GetTimeFrame(timeFrameId);
+        
         Assert.IsType<NotFoundResult>(actual);
     }
 }

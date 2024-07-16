@@ -18,15 +18,12 @@ const TimeFrameActive = () => {
     <>
       {isLoading && <Skeleton height={'100%'} radius="md" />}
       {isError && (
-        <Stack>
-          <Text p="md" size="xl">
-            No active TimeFrame
-          </Text>
+        <Stack className="box">
+          <Text size="xl">No active TimeFrame</Text>
         </Stack>
       )}
-      {isSuccess && !timeFrame && <Text>No active TimeFrame</Text>}
       {isSuccess && (
-        <Stack h={'100%'} gap={0} p={'md'}>
+        <Stack className="box" h={'100%'} gap={0} p={'md'}>
           <Text size="xl">Active</Text>
           <Text className={styles.timeElapsed}>
             {timeFrame && timeElapsed(timeFrame.timeFrameStart)}

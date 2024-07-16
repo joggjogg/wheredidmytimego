@@ -1,11 +1,13 @@
-.col {
+.box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--mantine-spacing-md);
   border: rem(1px) solid
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   border-radius: var(--mantine-radius-md);
-  overflow-y: scroll;
-  height: 100%;
 }
 
-.container {
-  overflow-y: scroll;
+.form {
+  flex-grow: 1;
 }
