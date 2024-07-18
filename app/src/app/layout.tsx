@@ -21,6 +21,7 @@ import '@mantine/core/styles.css'
 import StoreProvider from './storeProvider'
 import { Notifications } from '@mantine/notifications'
 import '@mantine/notifications/styles.css'
+import '@mantine/dates/styles.css'
 
 const inter = Inter({ subsets: ['latin'] })
 

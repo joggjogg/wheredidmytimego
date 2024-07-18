@@ -1,6 +1,9 @@
 'use client'
 
-import { useGetTimeFrameQuery } from '@/lib/services/timeFrames'
+import {
+  useGetTimeFrameQuery,
+  useUpdateTimeFrameMutation,
+} from '@/lib/services/timeFrames'
 import { toDateString, toDurationString } from '@/lib/util/dates'
 import {
   Box,
@@ -12,10 +15,12 @@ import {
   Textarea,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { DateTimePicker } from '@mantine/dates'
 import { redirect } from 'next/navigation'
 import React, { useCallback, useEffect, useState } from 'react'
 import styles from './page.module.css'
-import { IconX } from '@tabler/icons-react'
+import { IconCheck, IconX } from '@tabler/icons-react'
+import { notifications } from '@mantine/notifications'
 
 const Page = ({ params }: { params: { timeFrameId: string } }) => {
   const timeFrameId = parseInt(params.timeFrameId)
@@ -28,18 +33,28 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
     isSuccess,
   } = useGetTimeFrameQuery(timeFrameId)
 
+  const [updateTimeFrameMutation, { isLoading }] = useUpdateTimeFrameMutation()
+
   const [edit, setEdit] = useState<boolean>(false)
 
-  const form = useForm({
+  interface FormValues {
+    timeFrameStart: Date
+    timeFrameEnd: Date
+    project: number
+    description: string
+  }
+
+  const form = useForm<FormValues>({
     mode: 'uncontrolled',
-    initialValues: {
-      timeFrameStart: timeFrame?.timeFrameStart,
-      timeFrameEnd: timeFrame?.timeFrameEnd,
-      description: timeFrame?.description,
-      project: timeFrame?.projectId,
-    },
     validate: {},
   })
+
+  const setInitialValues = () => {
+    form.setFieldValue('timeFrameStart', new Date(timeFrame?.timeFrameStart!))
+    form.setFieldValue('timeFrameEnd', new Date(timeFrame?.timeFrameEnd!))
+    form.setFieldValue('project', timeFrame?.projectId!)
+    form.setFieldValue('description', timeFrame?.description!)
+  }
 
   const onEscape = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Escape') {
@@ -54,7 +69,34 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
     }
   }, [])
 
-  const handleSubmit = form.onSubmit(values => {})
+  const handleSubmit = form.onSubmit(async values => {
+    const result = await updateTimeFrameMutation({
+      timeFrameId: timeFrame?.timeFrameId,
+      timeFrameStart: toDateString(values.timeFrameStart),
+      timeFrameEnd: toDateString(values.timeFrameEnd),
+      tzName: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      description: values.description,
+    })
+
+    if (result.error) {
+      notifications.show({
+        color: 'red',
+        title: 'Error',
+        icon: <IconX />,
+        withBorder: true,
+        message: JSON.stringify(result.error),
+      })
+      return
+    }
+
+    notifications.show({
+      color: 'green',
+      title: 'Success',
+      icon: <IconCheck />,
+      message: 'TimeFrame updated',
+      withBorder: true,
+    })
+  })
 
   return (
     <>
@@ -109,7 +151,13 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
               </div>
             </Stack>
             <Group>
-              <Button variant="outline" onClick={() => setEdit(true)}>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setInitialValues()
+                  setEdit(true)
+                }}
+              >
                 Edit
               </Button>
               <Button color="red" variant="outline">
@@ -128,21 +176,36 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
               </Group>
               <form className={styles.form} onSubmit={handleSubmit}>
                 <Stack h={'100%'} justify="space-between">
-                  <div>
+                  <Stack>
                     <Select
                       label="Project"
                       placeholder="Select a project"
                       key={form.key('project')}
                       {...form.getInputProps('project')}
                     />
+                    <DateTimePicker
+                      label="Started"
+                      placeholder="Pick a date and time started"
+                      key={form.key('timeFrameStart')}
+                      {...form.getInputProps('timeFrameStart')}
+                    />
+                    <DateTimePicker
+                      label="Ended"
+                      placeholder="Pick a date and time ended"
+                      key={form.key('timeFrameEnd')}
+                      {...form.getInputProps('timeFrameEnd')}
+                    />
                     <Textarea
                       label="Description"
-                      placeholder="Describe what you have worked on."
+                      placeholder="Describe what you have worked on"
                       key={form.key('description')}
+                      minRows={6}
+                      maxRows={6}
+                      autosize
                       {...form.getInputProps('description')}
                     />
-                  </div>
-                  <Button variant="outline" type="submit">
+                  </Stack>
+                  <Button disabled={isLoading} variant="outline" type="submit">
                     Save
                   </Button>
                 </Stack>
