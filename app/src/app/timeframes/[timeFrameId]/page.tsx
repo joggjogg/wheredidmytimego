@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  useDeleteTimeFrameMutation,
   useGetTimeFrameQuery,
   useUpdateTimeFrameMutation,
 } from '@/lib/services/timeFrames'
@@ -9,6 +10,7 @@ import {
   Box,
   Button,
   Group,
+  Modal,
   Select,
   Stack,
   Text,
@@ -16,16 +18,20 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { DateTimePicker } from '@mantine/dates'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+
 import React, { useCallback, useEffect, useState } from 'react'
 import styles from './page.module.css'
 import { IconCheck, IconX } from '@tabler/icons-react'
 import { notifications } from '@mantine/notifications'
+import { useDisclosure } from '@mantine/hooks'
 
 const Page = ({ params }: { params: { timeFrameId: string } }) => {
+  const router = useRouter()
+
   const timeFrameId = parseInt(params.timeFrameId)
 
-  if (isNaN(timeFrameId)) redirect('/timeframes')
+  if (isNaN(timeFrameId)) router.push('/timeframes')
 
   const {
     data: timeFrame,
@@ -35,7 +41,11 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
 
   const [updateTimeFrameMutation, { isLoading }] = useUpdateTimeFrameMutation()
 
+  const [deleteTimeFrameMutation, { isLoading: isLoadingDelete }] =
+    useDeleteTimeFrameMutation()
+
   const [edit, setEdit] = useState<boolean>(false)
+  const [opened, { open, close }] = useDisclosure(false)
 
   interface FormValues {
     timeFrameStart: Date
@@ -98,8 +108,57 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
     })
   })
 
+  const handleDelete = async (e: React.MouseEvent<HTMLElement>) => {
+    const result = await deleteTimeFrameMutation(timeFrame?.timeFrameId!)
+
+    if (result.error) {
+      notifications.show({
+        color: 'red',
+        title: 'Error',
+        icon: <IconX />,
+        withBorder: true,
+        message: JSON.stringify(result.error),
+      })
+      return
+    }
+
+    close()
+    notifications.show({
+      color: 'green',
+      title: 'Success',
+      icon: <IconCheck />,
+      message: 'TimeFrame deleted',
+      withBorder: true,
+      onClose: () => {
+        router.push('/timeframes')
+      },
+    })
+  }
+
   return (
     <>
+      <Modal
+        centered
+        opened={opened}
+        onClose={close}
+        title="Are you sure you want to delete this TimeFrame?"
+      >
+        <form>
+          <Group grow justify="between">
+            <Button variant="outline" onClick={() => close()}>
+              Cancel
+            </Button>
+            <Button
+              disabled={isLoadingDelete}
+              variant="outline"
+              onClick={handleDelete}
+              color="red"
+            >
+              Delete
+            </Button>
+          </Group>
+        </form>
+      </Modal>
       <h1>Timeframe</h1>
       {isError && <Text>TimeFrame not found</Text>}
       {isSuccess && (
@@ -160,7 +219,13 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
               >
                 Edit
               </Button>
-              <Button color="red" variant="outline">
+              <Button
+                color="red"
+                variant="outline"
+                onClick={() => {
+                  open()
+                }}
+              >
                 Delete
               </Button>
             </Group>

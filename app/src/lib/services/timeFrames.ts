@@ -42,6 +42,15 @@ export const timeFramesApi = api.injectEndpoints({
         { type: 'TimeFrames', timeFrameId: timeFrame?.timeFrameId },
       ],
     }),
+    deleteTimeFrame: build.mutation<{ success: boolean; id: number }, number>({
+      query: timeFrameId => ({
+        url: `timeFrames/${timeFrameId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, id) => [
+        { type: 'TimeFrames', timeFrameId: id },
+      ],
+    }),
     updateTimeFrame: build.mutation<TimeFrame, Partial<TimeFrame>>({
       query(data) {
         const { timeFrameId, ...body } = data
@@ -64,4 +73,5 @@ export const {
   useGetActiveTimeFrameQuery,
   useAddTimeFrameMutation,
   useUpdateTimeFrameMutation,
+  useDeleteTimeFrameMutation,
 } = timeFramesApi

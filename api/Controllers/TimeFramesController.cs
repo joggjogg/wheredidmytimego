@@ -65,4 +65,11 @@ public class TimeFramesController : ControllerBase
         var entity = await _timeFrameService.Patch(timeFrameId, data);
         return Ok(entity);
     }
+
+    [HttpDelete("{timeFrameId:int}")]
+    public async Task<IActionResult> Delete(int timeFrameId)
+    {
+        await _timeFrameService.Delete(timeFrameId);
+        return Ok();
+    }
 }

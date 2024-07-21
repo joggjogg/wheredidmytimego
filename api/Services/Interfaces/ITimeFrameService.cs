@@ -12,4 +12,5 @@ public interface ITimeFrameService
     Task<TimeFrame> Create(TimeFrameCreateDTO timeFrame);
     Task<TimeFrame> Patch(int timeFrameId, TimeFramePatchDTO timeFrame);
     Task<bool> HasActiveTimeFrame();
+    Task Delete(int timeFrameId);
 }

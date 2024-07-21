@@ -13,18 +13,10 @@ using ILogger = Serilog.ILogger;
 
 namespace api.Services;
 
-public class TimeFrameService : ITimeFrameService
+public class TimeFrameService(ApplicationContext applicationContext) : ITimeFrameService
 {
-    private readonly ILogger _logger;
-    private readonly ApplicationContext _applicationContext;
-    private readonly DbSet<TimeFrame> _timeFrameRepository;
-
-    public TimeFrameService(ApplicationContext applicationContext)
-    {
-        _logger = Log.ForContext<TimeFrameService>();
-        _applicationContext = applicationContext;
-        _timeFrameRepository = applicationContext.Set<TimeFrame>();
-    }
+    private readonly ILogger _logger = Log.ForContext<TimeFrameService>();
+    private readonly DbSet<TimeFrame> _timeFrameRepository = applicationContext.Set<TimeFrame>();
 
     public async Task<IEnumerable<TimeFrame>> GetTimeFrame()
     {
@@ -50,7 +42,7 @@ public class TimeFrameService : ITimeFrameService
 
             var entity = timeFrame.Adapt<TimeFrame>();
             var entry = _timeFrameRepository.Add(entity);
-            await _applicationContext.SaveChangesAsync();
+            await applicationContext.SaveChangesAsync();
             return entry.Entity;
         }
         catch (TimeZoneNotFoundException)
@@ -90,7 +82,7 @@ public class TimeFrameService : ITimeFrameService
 
             var entry = _timeFrameRepository.Attach(entity);
             entry.State = EntityState.Modified;
-            await _applicationContext.SaveChangesAsync();
+            await applicationContext.SaveChangesAsync();
             return entry.Entity;
         }
         catch (Exception e)
@@ -109,5 +101,11 @@ public class TimeFrameService : ITimeFrameService
     public async Task<bool> HasActiveTimeFrame()
     {
         return await _timeFrameRepository.Where(t => t.TimeFrameEnd == null).AnyAsync();
+    }
+
+    public async Task Delete(int timeFrameId)
+    {
+        _timeFrameRepository.Attach(new TimeFrame() { TimeFrameId = timeFrameId }).State = EntityState.Deleted;
+        await applicationContext.SaveChangesAsync();
     }
 }
