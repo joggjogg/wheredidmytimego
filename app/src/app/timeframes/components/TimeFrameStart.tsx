@@ -56,7 +56,9 @@ const TimeFrameStart = () => {
 
   return (
     <Button
+      h={'100%'}
       color="#dfe2e6"
+      size="lg"
       radius="md"
       disabled={
         (isSuccess && timeFrame != undefined) || timeFrameActiveIsLoading

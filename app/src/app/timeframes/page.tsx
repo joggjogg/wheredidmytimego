@@ -19,9 +19,9 @@ export default function Timeframes() {
         justify="space-between"
         className={styles.container}
       >
-        <Stack align="stretch" justify="flex-start">
+        <Stack h={'50%'} justify="flex-start">
           <TimeFrameActive />
-          <Group>
+          <Group justify="between" grow h={'100%'}>
             <TimeFrameStart />
             <TimeFrameStop />
           </Group>
