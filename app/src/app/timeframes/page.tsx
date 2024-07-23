@@ -5,8 +5,19 @@ import TimeFrameStart from './components/TimeFrameStart'
 import TimeFrameStop from './components/TimeFrameStop'
 import TimeFrameList from './components/TimeFrameList'
 import styles from './timeFrames.module.css'
+import { useGetTimeFramesQuery } from '@/lib/services/timeFrames'
+import { Center, Loader, Stack } from '@mantine/core'
+import { errorToMessage } from '@/lib/services/helpers'
 
 export default function Timeframes() {
+  const {
+    data: timeFrames,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetTimeFramesQuery()
+
   return (
     <>
       <h1>TimeFrames</h1>
@@ -21,7 +32,15 @@ export default function Timeframes() {
           <TimeFrameStop />
         </div>
         <div className={styles.itemFour}>
-          <TimeFrameList />
+          {isLoading && (
+            <Stack h={'100%'} justify="space-around">
+              <Center>
+                <Loader size={'sm'} color="gray" />
+              </Center>
+            </Stack>
+          )}
+          {isError && errorToMessage(error)}
+          {isSuccess && <TimeFrameList timeFrames={timeFrames} />}
         </div>
       </div>
     </>

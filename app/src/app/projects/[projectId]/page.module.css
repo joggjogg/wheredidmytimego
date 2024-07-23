@@ -1,13 +1,14 @@
 .grid {
   display: grid;
   height: 100%;
+  gap: 1rem;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, 1fr);
   grid-template-areas:
-    'projectName projectName . . . .'
-    '. . . . . .'
-    '. . . . . .'
-    '. . . . . .';
+    'projectName . . . . .'
+    'timeFrameList timeFrameList timeFrameList . . .'
+    'timeFrameList timeFrameList timeFrameList . . .'
+    'timeFrameList timeFrameList timeFrameList . . .';
 }
 
 .grid > div {
@@ -18,6 +19,9 @@
 }
 
 .itemOne {
-  align-self: flex-start;
   grid-area: projectName;
+}
+
+.itemTwo {
+  grid-area: timeFrameList;
 }

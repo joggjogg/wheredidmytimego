@@ -1,11 +1,13 @@
 'use client'
 
 import React from 'react'
-import { useGetProjectQuery } from '@/lib/services/projects'
 import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
-import { errorToMessage } from '@/lib/services/helpers'
 import ProjectName from '../components/ProjectName'
+import { useGetProjectQuery } from '@/lib/services/projects'
+import { Center, Loader, Stack } from '@mantine/core'
+import { errorToMessage } from '@/lib/services/helpers'
+import TimeFrameList from '@/app/timeframes/components/TimeFrameList'
 
 const Page = ({ params }: { params: { projectId: string } }) => {
   const router = useRouter()
@@ -25,14 +27,30 @@ const Page = ({ params }: { params: { projectId: string } }) => {
   return (
     <>
       <h1>Project</h1>
-      {isError && errorToMessage(error)}
-      {isSuccess && (
-        <div className={styles.grid}>
-          <div className={styles.itemOne}>
-            <ProjectName {...project} />
-          </div>
+      <div className={styles.grid}>
+        <div className={styles.itemOne}>
+          {isLoading && (
+            <Stack h={'100%'} justify="space-around">
+              <Center>
+                <Loader size={'sm'} color="gray" />
+              </Center>
+            </Stack>
+          )}
+          {isError && errorToMessage(error)}
+          {isSuccess && <ProjectName project={project} />}
         </div>
-      )}
+        <div className={styles.itemTwo}>
+          {isLoading && (
+            <Stack h={'100%'} justify="space-around">
+              <Center>
+                <Loader size={'sm'} color="gray" />
+              </Center>
+            </Stack>
+          )}
+          {isError && errorToMessage(error)}
+          {isSuccess && <TimeFrameList timeFrames={project.timeFrames} />}
+        </div>
+      </div>
     </>
   )
 }

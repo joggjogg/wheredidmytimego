@@ -2,7 +2,7 @@ import { api } from './api'
 import { TimeFrame } from './timeFrames'
 
 export interface Project {
-  projectId: string
+  projectId: number
   projectName: string
   projectDescription?: string
   timeFrames: TimeFrame[]
