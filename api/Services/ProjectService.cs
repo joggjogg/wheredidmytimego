@@ -10,7 +10,7 @@ using ILogger = Serilog.ILogger;
 
 namespace api.Services;
 
-public class ProjectService: IProjectService
+public class ProjectService : IProjectService
 {
     private readonly ILogger _logger;
     private readonly ApplicationContext _applicationContext;
@@ -30,7 +30,9 @@ public class ProjectService: IProjectService
 
     public async Task<Project?> Get(int projectId)
     {
-        return await _projectRepository.FirstOrDefaultAsync(p => p.ProjectId == projectId);
+        return await _projectRepository.Where(p => p.ProjectId == projectId)
+            .Include(p => p.TimeFrames)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<Project> Create(ProjectCreateDTO project)
@@ -38,7 +40,7 @@ public class ProjectService: IProjectService
         var entity = project.Adapt<Project>();
         var entry = _projectRepository.Add(entity);
         await _applicationContext.SaveChangesAsync();
-        
+
         return entry.Entity;
     }
 }

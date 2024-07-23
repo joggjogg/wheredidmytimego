@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using api.Model;
 using api.Services;
 using api.Services.Interfaces;
@@ -40,7 +41,10 @@ public class Startup
                 }
             });
         });
-        services.AddControllers();
+        services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 

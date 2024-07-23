@@ -1,9 +1,10 @@
+import { useGetProjectsQuery } from '@/lib/services/projects'
 import {
   useGetActiveTimeFrameQuery,
   useUpdateTimeFrameMutation,
 } from '@/lib/services/timeFrames'
 import { toDateString } from '@/lib/util/dates'
-import { Button, Modal, TextInput } from '@mantine/core'
+import { Button, Modal, Select, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
@@ -17,13 +18,14 @@ const TimeFrameStop = () => {
     isSuccess: activeTimeFrameIsSuccess,
   } = useGetActiveTimeFrameQuery()
   const [updateTimeFrameMutation, { isLoading }] = useUpdateTimeFrameMutation()
+  const { data: projects } = useGetProjectsQuery()
   const [opened, { open, close }] = useDisclosure(false)
 
   const form = useForm({
-    mode: 'uncontrolled',
+    mode: 'controlled',
     initialValues: {
       description: '',
-      // project: null,
+      project: '',
     },
     validate: {
       description: value =>
@@ -48,6 +50,7 @@ const TimeFrameStop = () => {
       timeFrameEnd: toDateString(new Date()),
       tzName: Intl.DateTimeFormat().resolvedOptions().timeZone,
       description: values.description,
+      projectId: parseInt(values.project),
     })
 
     if (result.error) {
@@ -80,13 +83,28 @@ const TimeFrameStop = () => {
     <>
       <Modal opened={opened} onClose={close} centered title="Stop TimeFrame">
         <form onSubmit={handleSumbit}>
+          <Select
+            label="Project"
+            placeholder="Select on which project you have worked"
+            key={form.key('project')}
+            disabled={!projects}
+            data={
+              projects &&
+              projects.map(project => ({
+                label: project.projectName,
+                value: `${project.projectId}`,
+              }))
+            }
+            {...form.getInputProps('project')}
+          />
           <TextInput
-            withAsterisk
+            required
             label="Description"
             placeholder="What did you work on?"
             key={form.key('description')}
             {...form.getInputProps('description')}
           />
+
           <Button mt={'md'} fullWidth type="submit">
             End
           </Button>

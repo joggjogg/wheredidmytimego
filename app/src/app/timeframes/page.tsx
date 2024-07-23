@@ -1,13 +1,13 @@
 'use client'
+
 import React from 'react'
 import TimeFrameActive from './components/TimeFrameActive'
 import TimeFrameStart from './components/TimeFrameStart'
 import TimeFrameStop from './components/TimeFrameStop'
 import TimeFrameList from './components/TimeFrameList'
-import styles from './timeFrames.module.css'
 import { useGetTimeFramesQuery } from '@/lib/services/timeFrames'
-import { Center, Loader, Stack } from '@mantine/core'
-import { errorToMessage } from '@/lib/services/helpers'
+import styles from './page.module.css'
+import GridSlotWrapper from '@/lib/components/GridSlotWrapper'
 
 export default function Timeframes() {
   const {
@@ -32,15 +32,14 @@ export default function Timeframes() {
           <TimeFrameStop />
         </div>
         <div className={styles.itemFour}>
-          {isLoading && (
-            <Stack h={'100%'} justify="space-around">
-              <Center>
-                <Loader size={'sm'} color="gray" />
-              </Center>
-            </Stack>
-          )}
-          {isError && errorToMessage(error)}
-          {isSuccess && <TimeFrameList timeFrames={timeFrames} />}
+          <GridSlotWrapper
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+            isError={isError}
+            error={error}
+          >
+            {timeFrames && <TimeFrameList timeFrames={timeFrames} />}
+          </GridSlotWrapper>
         </div>
       </div>
     </>

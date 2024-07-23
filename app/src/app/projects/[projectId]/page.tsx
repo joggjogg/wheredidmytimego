@@ -5,9 +5,8 @@ import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 import ProjectName from '../components/ProjectName'
 import { useGetProjectQuery } from '@/lib/services/projects'
-import { Center, Loader, Stack } from '@mantine/core'
-import { errorToMessage } from '@/lib/services/helpers'
 import TimeFrameList from '@/app/timeframes/components/TimeFrameList'
+import GridSlotWrapper from '@/lib/components/GridSlotWrapper'
 
 const Page = ({ params }: { params: { projectId: string } }) => {
   const router = useRouter()
@@ -24,31 +23,30 @@ const Page = ({ params }: { params: { projectId: string } }) => {
     error,
   } = useGetProjectQuery(projectId)
 
+  console.debug(project)
   return (
     <>
       <h1>Project</h1>
       <div className={styles.grid}>
         <div className={styles.itemOne}>
-          {isLoading && (
-            <Stack h={'100%'} justify="space-around">
-              <Center>
-                <Loader size={'sm'} color="gray" />
-              </Center>
-            </Stack>
-          )}
-          {isError && errorToMessage(error)}
-          {isSuccess && <ProjectName project={project} />}
+          <GridSlotWrapper
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+            isError={isError}
+            error={error}
+          >
+            {project && <ProjectName project={project} />}
+          </GridSlotWrapper>
         </div>
         <div className={styles.itemTwo}>
-          {isLoading && (
-            <Stack h={'100%'} justify="space-around">
-              <Center>
-                <Loader size={'sm'} color="gray" />
-              </Center>
-            </Stack>
-          )}
-          {isError && errorToMessage(error)}
-          {isSuccess && <TimeFrameList timeFrames={project.timeFrames} />}
+          <GridSlotWrapper
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+            isError={isError}
+            error={error}
+          >
+            {project && <TimeFrameList timeFrames={project.timeFrames} />}
+          </GridSlotWrapper>
         </div>
       </div>
     </>

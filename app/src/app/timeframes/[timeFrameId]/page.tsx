@@ -38,12 +38,9 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
     isError,
     isSuccess,
   } = useGetTimeFrameQuery(timeFrameId)
-
   const [updateTimeFrameMutation, { isLoading }] = useUpdateTimeFrameMutation()
-
   const [deleteTimeFrameMutation, { isLoading: isLoadingDelete }] =
     useDeleteTimeFrameMutation()
-
   const [edit, setEdit] = useState<boolean>(false)
   const [opened, { open, close }] = useDisclosure(false)
 
@@ -160,7 +157,7 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
       {isError && <Text>TimeFrame not found</Text>}
       {isSuccess && (
         <Group h="100%" align="flex-start" grow justify="space-between">
-          <Stack h="100%" justify="space-between" className="box">
+          <Stack h="100%" justify="space-between" className={styles.box}>
             <Stack gap={'sm'}>
               <div>
                 <Text fw={'bolder'} size="xl">
