@@ -1,13 +1,15 @@
+'use client'
+
 import React, { useMemo } from 'react'
 import { useGetTimeFramesQuery } from '@/lib/services/timeFrames'
 import { Skeleton, Stack, Table, Text } from '@mantine/core'
 import { toDateString } from '@/lib/util/dates'
-import styles from './timeFrameList.module.css'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { IconExternalLink } from '@tabler/icons-react'
 
 const TimeFrameList = () => {
+  const router = useRouter()
   const {
     data: timeFrames,
     isLoading,
@@ -22,7 +24,7 @@ const TimeFrameList = () => {
   }, [timeFrames])
 
   return (
-    <div className={`${styles.container} box`}>
+    <div className="box">
       {isLoading && <Skeleton radius="md" h={'100%'} animate />}
       {isError && (
         <Stack>
@@ -47,9 +49,9 @@ const TimeFrameList = () => {
             {sortedTimeFrames?.map(timeFrame => (
               <Table.Tr
                 key={timeFrame.timeFrameId}
-                onClick={() => {
-                  redirect(`/timeframes/${timeFrame.timeFrameId}`)
-                }}
+                onClick={() =>
+                  router.push(`/timeframes/${timeFrame.timeFrameId}`)
+                }
               >
                 <Table.Td>date</Table.Td>
                 <Table.Td>

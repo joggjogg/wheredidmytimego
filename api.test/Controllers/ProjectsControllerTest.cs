@@ -42,4 +42,28 @@ public class ProjectsControllerTest
         var createdObjectResult = Assert.IsType<CreatedResult>(actual);
         Assert.IsType<Project>(createdObjectResult.Value);
     }
+
+    [Fact]
+    public async Task Get_WithValidId_ReturnsOkObjectResult()
+    {
+        const int projectId = 1;
+        var project = new Project();
+        _projectServiceMock.Setup(m => m.Get(projectId)).ReturnsAsync(project);
+
+        var actual = await _sut.Get(projectId);
+
+        var okObjectResult = Assert.IsType<OkObjectResult>(actual);
+        Assert.IsType<Project>(okObjectResult.Value);
+    }
+
+    [Fact]
+    public async Task Get_WithInvalidId_ReturnsNotFound()
+    {
+        const int projectId = -1;
+        _projectServiceMock.Setup(m => m.Get(projectId)).ReturnsAsync((Project)null);
+
+        var actual = await _sut.Get(projectId);
+
+        Assert.IsType<NotFoundResult>(actual);
+    }
 }

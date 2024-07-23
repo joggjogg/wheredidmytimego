@@ -1,11 +1,36 @@
-.col {
+.grid {
+  height: 100%;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-areas:
+    'timeFrameActive timeFrameActive timeFrameList timeFrameList timeFrameList timeFrameList'
+    'timeFrameStart timeFrameStop timeFrameList timeFrameList timeFrameList timeFrameList'
+    '. . timeFrameList timeFrameList timeFrameList timeFrameList'
+    '. . timeFrameList timeFrameList timeFrameList timeFrameList';
+}
+
+.grid > div {
+  padding: var(--mantine-spacing-md);
   border: rem(1px) solid
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   border-radius: var(--mantine-radius-md);
-  overflow-y: scroll;
-  height: 100%;
 }
 
-.container {
-  overflow-y: scroll;
+.itemOne {
+  grid-area: timeFrameActive;
+}
+
+.itemTwo {
+  grid-area: timeFrameStart;
+  justify-self: stretch;
+}
+
+.itemThree {
+  grid-area: timeFrameStop;
+}
+
+.itemFour {
+  grid-area: timeFrameList;
 }

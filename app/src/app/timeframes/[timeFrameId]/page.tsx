@@ -108,7 +108,7 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
     })
   })
 
-  const handleDelete = async (e: React.MouseEvent<HTMLElement>) => {
+  const handleDelete = async () => {
     const result = await deleteTimeFrameMutation(timeFrame?.timeFrameId!)
 
     if (result.error) {
@@ -122,16 +122,13 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
       return
     }
 
-    close()
+    router.push('/timeframes')
     notifications.show({
       color: 'green',
       title: 'Success',
       icon: <IconCheck />,
       message: 'TimeFrame deleted',
       withBorder: true,
-      onClose: () => {
-        router.push('/timeframes')
-      },
     })
   }
 

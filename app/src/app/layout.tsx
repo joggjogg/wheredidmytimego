@@ -75,7 +75,7 @@ export default function RootLayout({
                         stroke={1.5}
                       />
                     </NavbarLink>
-                    <NavbarLink label="Time frames" href="/timeframes">
+                    <NavbarLink label="TimeFrames" href="/timeframes">
                       <IconClock
                         style={{ width: rem(20), height: rem(20) }}
                         stroke={1.5}

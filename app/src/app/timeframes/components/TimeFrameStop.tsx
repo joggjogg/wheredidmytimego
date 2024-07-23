@@ -95,6 +95,7 @@ const TimeFrameStop = () => {
       <Button
         h={'100%'}
         size="lg"
+        fullWidth
         color="#dfe2e6"
         radius="md"
         disabled={activeTimeFrame == undefined || activeTimeFrameIsLoading}

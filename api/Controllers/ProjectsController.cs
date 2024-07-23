@@ -22,6 +22,18 @@ public class ProjectsController: ControllerBase
         return Ok(projects);
     }
 
+    [HttpGet("{projectId:int}")]
+    public async Task<IActionResult> Get(int projectId)
+    {
+        var project = await _projectService.Get(projectId);
+        if (project == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(project);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post(ProjectCreateDTO project)
     {

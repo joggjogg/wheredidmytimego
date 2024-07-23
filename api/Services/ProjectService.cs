@@ -1,3 +1,4 @@
+#nullable enable
 using api.Model;
 using api.Model.DTO;
 using api.Model.Entity;
@@ -25,6 +26,11 @@ public class ProjectService: IProjectService
     public async Task<IEnumerable<Project>> Get()
     {
         return await _projectRepository.ToListAsync();
+    }
+
+    public async Task<Project?> Get(int projectId)
+    {
+        return await _projectRepository.FirstOrDefaultAsync(p => p.ProjectId == projectId);
     }
 
     public async Task<Project> Create(ProjectCreateDTO project)

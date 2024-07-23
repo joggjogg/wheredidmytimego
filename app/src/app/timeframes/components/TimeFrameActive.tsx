@@ -23,7 +23,7 @@ const TimeFrameActive = () => {
         </Stack>
       )}
       {isSuccess && (
-        <Stack className="box" h={'100%'} gap={0} p={'md'}>
+        <Stack className="box" h={'100%'} gap={0}>
           <Text size="xl">Active</Text>
           <Text className={styles.timeElapsed}>
             {timeFrame && timeElapsed(timeFrame.timeFrameStart)}

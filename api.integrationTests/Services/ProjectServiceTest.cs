@@ -62,4 +62,34 @@ public class ProjectServiceTest(ApplicationContextFixture fixture) : TestBase(fi
         var created = Assert.IsType<Project>(actual);
         Assert.Equal(projectId, created.ProjectId);
     }
+
+    [Fact]
+    public async Task Get_WithValidId_ReturnsProject()
+    {
+        await ResetToBaseStateAsync();
+        const int projectId = 1;
+        Db.Projects.Add(new Project()
+        {
+            ProjectId = 1,
+            ProjectName = "Where Did My Time Go?",
+            ProjectDescription = "Prove to myself I can achieve anything"
+        });
+        await Db.SaveChangesAsync();
+
+        var actual = await _sut.Get(projectId);
+
+        var project = Assert.IsType<Project>(actual);
+        Assert.Equal(projectId, actual.ProjectId);
+    }
+
+    [Fact]
+    public async Task Get_WithInvalidId_ReturnsNull()
+    {
+        await ResetToBaseStateAsync();
+        const int projectId = -1;
+
+        var actual = await _sut.Get(projectId);
+        
+        Assert.Null(actual);
+    }
 }

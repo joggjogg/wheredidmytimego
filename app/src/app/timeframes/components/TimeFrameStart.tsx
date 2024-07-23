@@ -60,6 +60,7 @@ const TimeFrameStart = () => {
       color="#dfe2e6"
       size="lg"
       radius="md"
+      fullWidth
       disabled={
         (isSuccess && timeFrame != undefined) || timeFrameActiveIsLoading
       }
