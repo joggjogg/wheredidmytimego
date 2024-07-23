@@ -7,6 +7,7 @@ import { toDateString } from '@/lib/util/dates'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { IconExternalLink } from '@tabler/icons-react'
+import styles from './TimeFrameList.module.css'
 
 const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
   const { timeFrames } = props
@@ -34,6 +35,7 @@ const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
         {sortedTimeFrames?.map(timeFrame => (
           <Table.Tr
             key={timeFrame.timeFrameId}
+            className={styles.row}
             onClick={() => router.push(`/timeframes/${timeFrame.timeFrameId}`)}
           >
             <Table.Td>date</Table.Td>

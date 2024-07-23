@@ -15,13 +15,16 @@ import {
   IconHome,
   IconLogout,
 } from '@tabler/icons-react'
-import './globals.css'
 import classes from './layout.module.css'
-import '@mantine/core/styles.css'
 import StoreProvider from './storeProvider'
 import { Notifications } from '@mantine/notifications'
+import { RouterTransition } from '@/lib/components/RouterTransition'
+
+import './globals.css'
+import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
 import '@mantine/dates/styles.css'
+import '@mantine/nprogress/styles.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -58,6 +61,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider>
           <MantineProvider>
+            <RouterTransition />
             <Notifications />
             <section id={classes.app}>
               <nav className={classes.navbar}>
