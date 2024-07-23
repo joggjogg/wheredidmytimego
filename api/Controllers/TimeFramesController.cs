@@ -18,7 +18,7 @@ public class TimeFramesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var data = await _timeFrameService.GetTimeFrame();
+        var data = await _timeFrameService.GetTimeFrames();
         return Ok(data);
     }
 
@@ -37,7 +37,7 @@ public class TimeFramesController : ControllerBase
     [HttpGet("{timeFrameId:int}")]
     public async Task<IActionResult> GetTimeFrame(int timeFrameId)
     {
-        var timeFrame = await _timeFrameService.GetTimeFrame(timeFrameId);
+        var timeFrame = await _timeFrameService.GetTimeFrames(timeFrameId);
         if (timeFrame == null)
         {
             return NotFound();

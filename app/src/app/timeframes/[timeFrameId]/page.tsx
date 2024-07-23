@@ -25,6 +25,7 @@ import styles from './page.module.css'
 import { IconCheck, IconX } from '@tabler/icons-react'
 import { notifications } from '@mantine/notifications'
 import { useDisclosure } from '@mantine/hooks'
+import { useGetProjectsQuery } from '@/lib/services/projects'
 
 const Page = ({ params }: { params: { timeFrameId: string } }) => {
   const router = useRouter()
@@ -41,25 +42,26 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
   const [updateTimeFrameMutation, { isLoading }] = useUpdateTimeFrameMutation()
   const [deleteTimeFrameMutation, { isLoading: isLoadingDelete }] =
     useDeleteTimeFrameMutation()
+  const { data: projects } = useGetProjectsQuery()
   const [edit, setEdit] = useState<boolean>(false)
   const [opened, { open, close }] = useDisclosure(false)
 
   interface FormValues {
     timeFrameStart: Date
     timeFrameEnd: Date
-    project: number
+    project: string
     description: string
   }
 
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
+    mode: 'controlled',
     validate: {},
   })
 
   const setInitialValues = () => {
     form.setFieldValue('timeFrameStart', new Date(timeFrame?.timeFrameStart!))
     form.setFieldValue('timeFrameEnd', new Date(timeFrame?.timeFrameEnd!))
-    form.setFieldValue('project', timeFrame?.projectId!)
+    form.setFieldValue('project', `${timeFrame?.projectId}`)
     form.setFieldValue('description', timeFrame?.description!)
   }
 
@@ -83,6 +85,7 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
       timeFrameEnd: toDateString(values.timeFrameEnd),
       tzName: Intl.DateTimeFormat().resolvedOptions().timeZone,
       description: values.description,
+      projectId: parseInt(values.project),
     })
 
     if (result.error) {
@@ -119,7 +122,7 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
       return
     }
 
-    router.push('/timeframes')
+    router.back()
     notifications.show({
       color: 'green',
       title: 'Success',
@@ -164,7 +167,7 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
                   Project
                 </Text>
                 <Text size="md">
-                  {timeFrame.projectId || 'No project linked'}
+                  {timeFrame.project?.projectName || 'No project linked'}
                 </Text>
               </div>
               <div>
@@ -239,6 +242,14 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
                     <Select
                       label="Project"
                       placeholder="Select a project"
+                      disabled={!projects}
+                      data={
+                        projects &&
+                        projects.map(project => ({
+                          label: project.projectName,
+                          value: `${project.projectId}`,
+                        }))
+                      }
                       key={form.key('project')}
                       {...form.getInputProps('project')}
                     />

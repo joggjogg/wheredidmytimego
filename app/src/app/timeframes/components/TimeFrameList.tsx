@@ -4,14 +4,17 @@ import React, { useMemo } from 'react'
 import { TimeFrame } from '@/lib/services/timeFrames'
 import { Table } from '@mantine/core'
 import { toDateString } from '@/lib/util/dates'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { IconExternalLink } from '@tabler/icons-react'
+import { usePathname, useRouter } from 'next/navigation'
 import styles from './TimeFrameList.module.css'
 
 const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
   const { timeFrames } = props
   const router = useRouter()
+  const pathname = usePathname()
+
+  const showProject = !pathname.includes('projects')
+
+  console.debug(pathname)
 
   const sortedTimeFrames = useMemo(() => {
     return timeFrames
@@ -26,8 +29,7 @@ const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
           <Table.Th>Date</Table.Th>
           <Table.Th>TimeFrameStart</Table.Th>
           <Table.Th>TimeFrameEnd</Table.Th>
-          <Table.Th>Project</Table.Th>
-          <Table.Th>Link</Table.Th>
+          {showProject && <Table.Th>Project</Table.Th>}
         </Table.Tr>
       </Table.Thead>
 
@@ -46,12 +48,9 @@ const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
               {timeFrame.timeFrameEnd &&
                 toDateString(new Date(timeFrame.timeFrameEnd))}
             </Table.Td>
-            <Table.Td>{timeFrame.projectId}</Table.Td>
-            <Table.Td>
-              <Link href={`/timeframes/${timeFrame.timeFrameId}`}>
-                <IconExternalLink />
-              </Link>
-            </Table.Td>
+            {showProject && (
+              <Table.Td>{timeFrame.project?.projectName}</Table.Td>
+            )}
           </Table.Tr>
         ))}
       </Table.Tbody>

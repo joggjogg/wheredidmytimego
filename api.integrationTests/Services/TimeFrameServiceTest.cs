@@ -34,7 +34,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         });
         await Db.SaveChangesAsync();
 
-        var actual = await _sut.GetTimeFrame();
+        var actual = await _sut.GetTimeFrames();
 
         Assert.Collection(actual,
             frame =>
@@ -222,7 +222,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         });
         await Db.SaveChangesAsync();
 
-        var result = await _sut.GetTimeFrame(timeFrameId);
+        var result = await _sut.GetTimeFrames(timeFrameId);
 
         var timeFrame = Assert.IsType<TimeFrame>(result);
         Assert.Equal(timeFrameId, timeFrame.TimeFrameId);
@@ -234,7 +234,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         await ResetToBaseStateAsync();
         const int timeFrameId = 1;
 
-        var result = await _sut.GetTimeFrame(timeFrameId);
+        var result = await _sut.GetTimeFrames(timeFrameId);
 
         Assert.Null(result);
     }

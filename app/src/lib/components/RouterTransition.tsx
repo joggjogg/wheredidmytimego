@@ -10,7 +10,7 @@ export const RouterTransition = () => {
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    setTimeout(() => nprogress.complete(), 200)
+    setTimeout(() => nprogress.complete(), 100)
 
     return () => {
       nprogress.start()

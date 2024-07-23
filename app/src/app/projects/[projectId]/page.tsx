@@ -23,7 +23,6 @@ const Page = ({ params }: { params: { projectId: string } }) => {
     error,
   } = useGetProjectQuery(projectId)
 
-  console.debug(project)
   return (
     <>
       <h1>Project</h1>

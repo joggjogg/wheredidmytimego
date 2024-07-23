@@ -6,8 +6,8 @@ namespace api.Services.Interfaces;
 
 public interface ITimeFrameService
 {
-    Task<IEnumerable<TimeFrame>> GetTimeFrame();
-    Task<TimeFrame?> GetTimeFrame(int timeFrameId);
+    Task<IEnumerable<TimeFrame>> GetTimeFrames();
+    Task<TimeFrame?> GetTimeFrames(int timeFrameId);
     Task<TimeFrame?> GetActiveTimeFrame();
     Task<TimeFrame> Create(TimeFrameCreateDTO timeFrame);
     Task<TimeFrame> Patch(int timeFrameId, TimeFramePatchDTO timeFrame);

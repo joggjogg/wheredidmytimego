@@ -18,19 +18,24 @@ public class TimeFrameService(ApplicationContext applicationContext) : ITimeFram
     private readonly ILogger _logger = Log.ForContext<TimeFrameService>();
     private readonly DbSet<TimeFrame> _timeFrameRepository = applicationContext.Set<TimeFrame>();
 
-    public async Task<IEnumerable<TimeFrame>> GetTimeFrame()
+    public async Task<IEnumerable<TimeFrame>> GetTimeFrames()
     {
-        return await _timeFrameRepository.ToListAsync();
+        return await _timeFrameRepository.Include(t => t.Project).ToListAsync();
     }
 
     public async Task<TimeFrame?> GetActiveTimeFrame()
     {
-        return await _timeFrameRepository.FirstOrDefaultAsync(t => t.TimeFrameEnd == null);
+        return await _timeFrameRepository.Where(t => t.TimeFrameEnd == null)
+            .Include(t => t.Project)
+            .FirstOrDefaultAsync();
     }
 
-    public async Task<TimeFrame?> GetTimeFrame(int timeFrameId)
+    public async Task<TimeFrame?> GetTimeFrames(int timeFrameId)
     {
-        return await _timeFrameRepository.FirstOrDefaultAsync(t => t.TimeFrameId == timeFrameId);
+        return await _timeFrameRepository
+            .Where(t => t.TimeFrameId == timeFrameId)
+            .Include(t => t.Project)
+            .FirstOrDefaultAsync(t => t.TimeFrameId == timeFrameId);
     }
 
     public async Task<TimeFrame> Create(TimeFrameCreateDTO timeFrame)

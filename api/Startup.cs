@@ -2,7 +2,6 @@ using System.Text.Json.Serialization;
 using api.Model;
 using api.Services;
 using api.Services.Interfaces;
-using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace api;

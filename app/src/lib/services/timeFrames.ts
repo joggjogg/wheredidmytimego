@@ -1,4 +1,5 @@
 import { api } from './api'
+import { Project } from './projects'
 
 export interface TimeFrame {
   timeFrameId: number
@@ -7,6 +8,7 @@ export interface TimeFrame {
   tzName: string
   description?: string
   projectId?: number
+  project?: Project
 }
 
 type TimeFramesResponse = TimeFrame[]
@@ -49,6 +51,7 @@ export const timeFramesApi = api.injectEndpoints({
       }),
       invalidatesTags: (result, error, id) => [
         { type: 'TimeFrames', timeFrameId: id },
+        { type: 'Projects' },
       ],
     }),
     updateTimeFrame: build.mutation<TimeFrame, Partial<TimeFrame>>({

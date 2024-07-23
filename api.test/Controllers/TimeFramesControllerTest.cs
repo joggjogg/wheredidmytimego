@@ -23,7 +23,7 @@ public class TimeFramesControllerTest
     public async Task Get_ReturnsOkObjectResult()
     {
         TimeFrame[] timeFrames = [new TimeFrame()];
-        _timeFrameServiceMock.Setup(m => m.GetTimeFrame()).ReturnsAsync(timeFrames);
+        _timeFrameServiceMock.Setup(m => m.GetTimeFrames()).ReturnsAsync(timeFrames);
 
         var actual = await _sut.Get();
 
@@ -114,7 +114,7 @@ public class TimeFramesControllerTest
             TimeFrameId = 1,
             TimeFrameStart = DateTime.Parse("2024-06-12 10:52:32"),
         };
-        _timeFrameServiceMock.Setup(m => m.GetTimeFrame(timeFrameId)).ReturnsAsync(timeFrame);
+        _timeFrameServiceMock.Setup(m => m.GetTimeFrames(timeFrameId)).ReturnsAsync(timeFrame);
 
         var actual = await _sut.GetTimeFrame(timeFrameId);
 
@@ -126,7 +126,7 @@ public class TimeFramesControllerTest
     public async Task GetTimeFrame_WithNonValidTimeFrameId_ReturnsNotFoundResult()
     {
         const int timeFrameId = -1;
-        _timeFrameServiceMock.Setup(m => m.GetTimeFrame(timeFrameId)).ReturnsAsync((TimeFrame)null);
+        _timeFrameServiceMock.Setup(m => m.GetTimeFrames(timeFrameId)).ReturnsAsync((TimeFrame)null);
 
         var actual = await _sut.GetTimeFrame(timeFrameId);
         
