@@ -74,7 +74,7 @@ const ProjectCreate = () => {
           </Stack>
         </form>
       </Modal>
-      <Button color="#dfe2e6" onClick={open} fullWidth>
+      <Button h={'100%'} color="#dfe2e6" onClick={open} fullWidth>
         New Project
       </Button>
     </>

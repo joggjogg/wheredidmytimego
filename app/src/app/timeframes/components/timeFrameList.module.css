@@ -1,3 +1,7 @@
 .row {
   cursor: pointer;
 }
+
+.table {
+  height: 100%;
+}

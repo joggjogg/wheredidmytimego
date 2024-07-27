@@ -9,12 +9,7 @@ import {
   rem,
 } from '@mantine/core'
 import Link from 'next/link'
-import {
-  IconClipboardList,
-  IconClock,
-  IconHome,
-  IconLogout,
-} from '@tabler/icons-react'
+import { IconClipboardList, IconClock, IconLogout } from '@tabler/icons-react'
 import classes from './layout.module.css'
 import StoreProvider from './storeProvider'
 import { Notifications } from '@mantine/notifications'
@@ -67,20 +62,14 @@ export default function RootLayout({
               <nav className={classes.navbar}>
                 <div className={classes.navbarMain}>
                   <Stack justify="center" gap={0}>
-                    <NavbarLink label="Dashboard" href="/dashboard">
-                      <IconHome
+                    <NavbarLink label="TimeFrames" href="/timeframes">
+                      <IconClock
                         style={{ width: rem(20), height: rem(20) }}
                         stroke={1.5}
                       />
                     </NavbarLink>
                     <NavbarLink label="Projects" href="/projects">
                       <IconClipboardList
-                        style={{ width: rem(20), height: rem(20) }}
-                        stroke={1.5}
-                      />
-                    </NavbarLink>
-                    <NavbarLink label="TimeFrames" href="/timeframes">
-                      <IconClock
                         style={{ width: rem(20), height: rem(20) }}
                         stroke={1.5}
                       />

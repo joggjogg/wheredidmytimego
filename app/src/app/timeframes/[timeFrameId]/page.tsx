@@ -5,7 +5,7 @@ import {
   useGetTimeFrameQuery,
   useUpdateTimeFrameMutation,
 } from '@/lib/services/timeFrames'
-import { toDateString, toDurationString } from '@/lib/util/dates'
+import { toFullDateString, toDurationString } from '@/lib/util/dates'
 import {
   Box,
   Button,
@@ -81,8 +81,8 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
   const handleSubmit = form.onSubmit(async values => {
     const result = await updateTimeFrameMutation({
       timeFrameId: timeFrame?.timeFrameId,
-      timeFrameStart: toDateString(values.timeFrameStart),
-      timeFrameEnd: toDateString(values.timeFrameEnd),
+      timeFrameStart: toFullDateString(values.timeFrameStart),
+      timeFrameEnd: toFullDateString(values.timeFrameEnd),
       tzName: Intl.DateTimeFormat().resolvedOptions().timeZone,
       description: values.description,
       projectId: parseInt(values.project),
@@ -156,7 +156,8 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
           </Group>
         </form>
       </Modal>
-      <h1>Timeframe</h1>
+
+      <h1>TimeFrames</h1>
       {isError && <Text>TimeFrame not found</Text>}
       {isSuccess && (
         <Group h="100%" align="flex-start" grow justify="space-between">
@@ -175,7 +176,7 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
                   Started
                 </Text>
                 <Text size="md">
-                  {toDateString(new Date(timeFrame.timeFrameStart))}
+                  {toFullDateString(new Date(timeFrame.timeFrameStart))}
                 </Text>
               </div>
               <div>
@@ -184,7 +185,7 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
                 </Text>
                 <Text size="md">
                   {timeFrame.timeFrameEnd &&
-                    toDateString(new Date(timeFrame.timeFrameEnd))}
+                    toFullDateString(new Date(timeFrame.timeFrameEnd))}
                 </Text>
               </div>
               <div>

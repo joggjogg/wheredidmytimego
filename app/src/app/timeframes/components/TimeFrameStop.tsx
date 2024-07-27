@@ -3,7 +3,7 @@ import {
   useGetActiveTimeFrameQuery,
   useUpdateTimeFrameMutation,
 } from '@/lib/services/timeFrames'
-import { toDateString } from '@/lib/util/dates'
+import { toFullDateString } from '@/lib/util/dates'
 import { Button, Modal, Select, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -47,7 +47,7 @@ const TimeFrameStop = () => {
 
     const result = await updateTimeFrameMutation({
       timeFrameId: activeTimeFrame?.timeFrameId,
-      timeFrameEnd: toDateString(new Date()),
+      timeFrameEnd: toFullDateString(new Date()),
       tzName: Intl.DateTimeFormat().resolvedOptions().timeZone,
       description: values.description,
       projectId: parseInt(values.project),
@@ -112,7 +112,6 @@ const TimeFrameStop = () => {
       </Modal>
       <Button
         h={'100%'}
-        size="lg"
         fullWidth
         color="#dfe2e6"
         radius="md"

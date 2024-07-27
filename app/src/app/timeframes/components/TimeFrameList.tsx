@@ -3,9 +3,10 @@
 import React, { useMemo } from 'react'
 import { TimeFrame } from '@/lib/services/timeFrames'
 import { Table } from '@mantine/core'
-import { toDateString } from '@/lib/util/dates'
+import { toDurationString, toTimeString } from '@/lib/util/dates'
 import { usePathname, useRouter } from 'next/navigation'
 import styles from './TimeFrameList.module.css'
+import { intlFormat } from 'date-fns'
 
 const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
   const { timeFrames } = props
@@ -13,8 +14,6 @@ const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
   const pathname = usePathname()
 
   const showProject = !pathname.includes('projects')
-
-  console.debug(pathname)
 
   const sortedTimeFrames = useMemo(() => {
     return timeFrames
@@ -27,8 +26,9 @@ const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Date</Table.Th>
-          <Table.Th>TimeFrameStart</Table.Th>
-          <Table.Th>TimeFrameEnd</Table.Th>
+          <Table.Th>Start</Table.Th>
+          <Table.Th>End</Table.Th>
+          <Table.Th>Duration</Table.Th>
           {showProject && <Table.Th>Project</Table.Th>}
         </Table.Tr>
       </Table.Thead>
@@ -40,13 +40,22 @@ const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
             className={styles.row}
             onClick={() => router.push(`/timeframes/${timeFrame.timeFrameId}`)}
           >
-            <Table.Td>date</Table.Td>
             <Table.Td>
-              {toDateString(new Date(timeFrame.timeFrameStart))}
+              {intlFormat(new Date(timeFrame.timeFrameStart))}
+            </Table.Td>
+            <Table.Td>
+              {toTimeString(new Date(timeFrame.timeFrameStart))}
             </Table.Td>
             <Table.Td>
               {timeFrame.timeFrameEnd &&
-                toDateString(new Date(timeFrame.timeFrameEnd))}
+                toTimeString(new Date(timeFrame.timeFrameEnd))}
+            </Table.Td>
+            <Table.Td>
+              {timeFrame.timeFrameEnd &&
+                toDurationString(
+                  new Date(timeFrame.timeFrameStart),
+                  new Date(timeFrame.timeFrameEnd),
+                )}
             </Table.Td>
             {showProject && (
               <Table.Td>{timeFrame.project?.projectName}</Table.Td>

@@ -3,6 +3,7 @@ import { useTimeElapsed } from '@/lib/hooks'
 import { useGetActiveTimeFrameQuery } from '@/lib/services/timeFrames'
 import { Skeleton, Stack, Text } from '@mantine/core'
 import styles from './timeFrameActive.module.css'
+import { formatRelative } from 'date-fns'
 
 const TimeFrameActive = () => {
   const {
@@ -29,8 +30,8 @@ const TimeFrameActive = () => {
             {timeFrame && timeElapsed(timeFrame.timeFrameStart)}
           </Text>
           <Text size="sm">
-            Started on{' '}
-            {`${new Date(timeFrame.timeFrameStart).toLocaleTimeString()}`}
+            Started{' '}
+            {formatRelative(new Date(timeFrame.timeFrameStart), new Date())}
           </Text>
         </Stack>
       )}

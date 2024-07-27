@@ -2,7 +2,7 @@ import {
   useAddTimeFrameMutation,
   useGetActiveTimeFrameQuery,
 } from '@/lib/services/timeFrames'
-import { toDateString } from '@/lib/util/dates'
+import { toFullDateString } from '@/lib/util/dates'
 import { Button } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
 import { IconCheck, IconX } from '@tabler/icons-react'
@@ -30,7 +30,7 @@ const TimeFrameStart = () => {
     }
 
     const result = await addTimeFrame({
-      timeFrameStart: toDateString(new Date()),
+      timeFrameStart: toFullDateString(new Date()),
       tzName: Intl.DateTimeFormat().resolvedOptions().timeZone,
     })
 
@@ -58,7 +58,6 @@ const TimeFrameStart = () => {
     <Button
       h={'100%'}
       color="#dfe2e6"
-      size="lg"
       radius="md"
       fullWidth
       disabled={
