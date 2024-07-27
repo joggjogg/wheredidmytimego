@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using api.Model;
 using api.Services;
 using api.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace api;
@@ -23,6 +24,14 @@ public class Startup
         {
             options.UseNpgsql(Configuration.GetConnectionString("Default"));
         });
+        services.AddDbContext<IdentityContext>(options =>
+        {
+            options.UseNpgsql(Configuration.GetConnectionString("Identity"));
+        });
+
+        services.AddAuthorization();
+        services.AddIdentityApiEndpoints<IdentityUser>()
+            .AddEntityFrameworkStores<IdentityContext>();
 
         services.AddCors(builder =>
         {
@@ -64,19 +73,29 @@ public class Startup
         app.UseForwardedHeaders();
         app.UseResponseCaching();
         app.UseRouting();
-        app.UseAuthorization();
         app.UseHttpsRedirection();
 
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+            endpoints.MapIdentityApi<IdentityUser>();
+
+        });
         using var scope = scopeFactory.CreateScope();
-        ApplyMigrations(scope.ServiceProvider.GetRequiredService<ApplicationContext>());
+        ApplyMigrations(scope.ServiceProvider.GetRequiredService<ApplicationContext>(),
+            scope.ServiceProvider.GetRequiredService<IdentityContext>());
     }
 
-    public void ApplyMigrations(ApplicationContext applicationContext)
+    public void ApplyMigrations(ApplicationContext applicationContext, IdentityContext identityContext)
     {
         if (applicationContext.Database.GetPendingMigrations().Any())
         {
             applicationContext.Database.Migrate();
+        }
+
+        if (identityContext.Database.GetPendingMigrations().Any())
+        {
+            identityContext.Database.Migrate();
         }
     }
 }
