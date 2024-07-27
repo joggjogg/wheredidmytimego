@@ -36,7 +36,7 @@ public class ProjectsController: ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(ProjectCreateDTO project)
+    public async Task<IActionResult> Post(ProjectPostRequest project)
     {
         var created = await _projectService.Create(project);
         return Created($"/projects{created.ProjectId}", created);

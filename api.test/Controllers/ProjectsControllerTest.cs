@@ -34,7 +34,7 @@ public class ProjectsControllerTest
     [Fact]
     public async Task Post_ReturnsCreatedObjectResult()
     {
-        var project = new ProjectCreateDTO();
+        var project = new ProjectPostRequest();
         _projectServiceMock.Setup(m => m.Create(project)).ReturnsAsync(new Project());
 
         var actual = await _sut.Post(project);

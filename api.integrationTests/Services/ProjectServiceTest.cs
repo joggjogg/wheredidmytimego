@@ -51,7 +51,7 @@ public class ProjectServiceTest(ApplicationContextFixture fixture) : TestBase(fi
     {
         await ResetToBaseStateAsync();
         const int projectId = 1;
-        var project = new ProjectCreateDTO()
+        var project = new ProjectPostRequest()
         {
             ProjectName = "Where Did My Time Go?",
             ProjectDescription = "Prove to myself I can achieve anything"

@@ -53,7 +53,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
     public async Task Create_WithValidTimeFrame_CreatesTimeFrame()
     {
         await ResetToBaseStateAsync();
-        var timeFrame = new TimeFrameCreateDTO()
+        var timeFrame = new TimeFramePostRequest()
         {
             TimeFrameStart = DateTime.Parse("2024-06-11 10:00:00"),
             TzName = "Eastern Standard Time"
@@ -69,7 +69,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
     public async Task Create_WithInvalidTimeZone_ThrowsTimeZoneNotFoundException()
     {
         await ResetToBaseStateAsync();
-        var timeFrame = new TimeFrameCreateDTO()
+        var timeFrame = new TimeFramePostRequest()
         {
             TimeFrameStart = DateTime.Parse("2024-06-11 10:00:00"),
             TzName = "European Bozo Time"
@@ -82,7 +82,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
     public async Task Create_WithValidTimeZone_CorrectlyConvertsToUtc()
     {
         await ResetToBaseStateAsync();
-        var timeFrame = new TimeFrameCreateDTO()
+        var timeFrame = new TimeFramePostRequest()
         {
             TimeFrameStart = DateTime.Parse("2024-06-12 10:52:32"),
             TzName = "Europe/Luxembourg"
@@ -105,7 +105,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         });
         await Db.SaveChangesAsync();
         const int timeFrameId = 1;
-        var data = new TimeFramePatchDTO()
+        var data = new TimeFramePatchRequest()
         {
             TimeFrameEnd = DateTime.Parse("2024-06-11 11:00:00"),
             TzName = "Europe/Luxembourg"
@@ -129,7 +129,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         });
         await Db.SaveChangesAsync();
         const int timeFrameId = 1;
-        var data = new TimeFramePatchDTO()
+        var data = new TimeFramePatchRequest()
         {
             TimeFrameEnd = DateTime.Parse("2024-06-11 09:59:59"),
             TzName = "Europe/Luxembourg"
@@ -143,7 +143,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
     {
         await ResetToBaseStateAsync();
         const int timeFrameId = 1;
-        var data = new TimeFramePatchDTO()
+        var data = new TimeFramePatchRequest()
         {
             TimeFrameEnd = DateTime.Parse("2024-06-11 09:59:59"),
             TzName = "Europe/Luxembourg"

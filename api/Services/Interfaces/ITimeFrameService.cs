@@ -9,8 +9,8 @@ public interface ITimeFrameService
     Task<IEnumerable<TimeFrame>> GetTimeFrames();
     Task<TimeFrame?> GetTimeFrames(int timeFrameId);
     Task<TimeFrame?> GetActiveTimeFrame();
-    Task<TimeFrame> Create(TimeFrameCreateDTO timeFrame);
-    Task<TimeFrame> Patch(int timeFrameId, TimeFramePatchDTO timeFrame);
+    Task<TimeFrame> Create(TimeFramePostRequest timeFrame);
+    Task<TimeFrame> Patch(int timeFrameId, TimeFramePatchRequest timeFrame);
     Task<bool> HasActiveTimeFrame();
     Task Delete(int timeFrameId);
 }

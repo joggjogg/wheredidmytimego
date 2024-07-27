@@ -34,7 +34,7 @@ public class TimeFramesControllerTest
     [Fact]
     public async Task Post_WithValidData_ReturnsCreatedResult()
     {
-        var data = new TimeFrameCreateDTO()
+        var data = new TimeFramePostRequest()
         {
             TimeFrameStart = DateTime.Parse("2024-06-12 10:52:32"),
             TzName = "Europe/Luxembourg"
@@ -51,7 +51,7 @@ public class TimeFramesControllerTest
     public async Task Patch_WithValidData_ReturnsOkObjectResult()
     {
         const int timeFrameId = 1;
-        var data = new TimeFramePatchDTO()
+        var data = new TimeFramePatchRequest()
         {
             TimeFrameEnd = DateTime.Parse("2024-06-12 15:32:52"),
             TzName = "Europe/Luxembourg"
@@ -67,7 +67,7 @@ public class TimeFramesControllerTest
     [Fact]
     public async Task Post_WithRunningTimeFrame_ReturnsConflictObjectResult()
     {
-        var data = new TimeFrameCreateDTO()
+        var data = new TimeFramePostRequest()
         {
             TimeFrameStart = DateTime.Parse("2024-06-12 10:52:32"),
             TzName = "Europe/Luxembourg"

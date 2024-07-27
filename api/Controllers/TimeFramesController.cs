@@ -48,7 +48,7 @@ public class TimeFramesController : ControllerBase
     
 
     [HttpPost]
-    public async Task<IActionResult> Post(TimeFrameCreateDTO data)
+    public async Task<IActionResult> Post(TimeFramePostRequest data)
     {
         if (await _timeFrameService.HasActiveTimeFrame())
         {
@@ -60,7 +60,7 @@ public class TimeFramesController : ControllerBase
     }
 
     [HttpPatch("{timeFrameId:int}")]
-    public async Task<IActionResult> Patch(int timeFrameId, TimeFramePatchDTO data)
+    public async Task<IActionResult> Patch(int timeFrameId, TimeFramePatchRequest data)
     {
         var entity = await _timeFrameService.Patch(timeFrameId, data);
         return Ok(entity);

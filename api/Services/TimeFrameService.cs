@@ -38,7 +38,7 @@ public class TimeFrameService(ApplicationContext applicationContext) : ITimeFram
             .FirstOrDefaultAsync(t => t.TimeFrameId == timeFrameId);
     }
 
-    public async Task<TimeFrame> Create(TimeFrameCreateDTO timeFrame)
+    public async Task<TimeFrame> Create(TimeFramePostRequest timeFrame)
     {
         try
         {
@@ -57,7 +57,7 @@ public class TimeFrameService(ApplicationContext applicationContext) : ITimeFram
         }
     }
 
-    public async Task<TimeFrame> Patch(int timeFrameId, TimeFramePatchDTO timeFrame)
+    public async Task<TimeFrame> Patch(int timeFrameId, TimeFramePatchRequest timeFrame)
     {
         try
         {

@@ -8,5 +8,5 @@ public interface IProjectService
 {
     Task<IEnumerable<Project>> Get();
     Task<Project?> Get(int projectId);
-    Task<Project> Create(ProjectCreateDTO project);
+    Task<Project> Create(ProjectPostRequest project);
 }

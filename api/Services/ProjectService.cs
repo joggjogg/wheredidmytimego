@@ -35,7 +35,7 @@ public class ProjectService : IProjectService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<Project> Create(ProjectCreateDTO project)
+    public async Task<Project> Create(ProjectPostRequest project)
     {
         var entity = project.Adapt<Project>();
         var entry = _projectRepository.Add(entity);
