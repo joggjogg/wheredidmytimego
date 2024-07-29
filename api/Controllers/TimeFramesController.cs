@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/timeframes")]
 public class TimeFramesController : ControllerBase
 {
     private readonly ITimeFrameService _timeFrameService;

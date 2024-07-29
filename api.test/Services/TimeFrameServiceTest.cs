@@ -5,7 +5,7 @@ using api.Model.Entity;
 using api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.integrationTests.Services;
+namespace api.test.Services;
 
 public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(fixture)
 {

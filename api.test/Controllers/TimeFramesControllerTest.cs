@@ -4,7 +4,6 @@ using api.Model.Entity;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Xunit;
 
 namespace api.test.Controllers;
 

@@ -3,7 +3,7 @@ using api.Model.DTO;
 using api.Model.Entity;
 using api.Services;
 
-namespace api.integrationTests.Services;
+namespace api.test.Services;
 
 public class ProjectServiceTest(ApplicationContextFixture fixture) : TestBase(fixture)
 {

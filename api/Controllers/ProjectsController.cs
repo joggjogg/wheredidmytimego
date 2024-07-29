@@ -1,12 +1,11 @@
 using api.Model.DTO;
 using api.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/projects")]
 public class ProjectsController: ControllerBase
 {
     private readonly IProjectService _projectService;
