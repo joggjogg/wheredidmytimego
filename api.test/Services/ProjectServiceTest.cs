@@ -1,7 +1,9 @@
 using api.integrationTests.TestInfrastructure;
 using api.Model.DTO;
 using api.Model.Entity;
+using api.Model.Request;
 using api.Services;
+using api.test.TestInfrastructure;
 
 namespace api.test.Services;
 

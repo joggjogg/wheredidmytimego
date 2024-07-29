@@ -1,15 +1,16 @@
 using System.Data.Common;
+using api.integrationTests.TestInfrastructure;
 using api.Model;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace api.integrationTests.TestInfrastructure;
+namespace api.test.TestInfrastructure;
 
 public class ApplicationContextFixture: IAsyncLifetime
 {
     private TestContainerSetup Setup { get; }
-    internal DbConnection Connection { get; set; }
-    
+    internal DbConnection Connection { get; set; } = null!;
+
     public ApplicationContextFixture()
     {
         Setup = new();

@@ -1,6 +1,7 @@
 #nullable enable
 using api.Model.DTO;
 using api.Model.Entity;
+using api.Model.Request;
 
 namespace api.Services.Interfaces;
 

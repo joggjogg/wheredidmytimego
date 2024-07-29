@@ -97,7 +97,7 @@ public class TimeFramesControllerTest
     [Fact]
     public async Task GetActiveTimeFrame_WithNoActiveTimeFrame_ReturnsNotFound()
     {
-        _timeFrameServiceMock.Setup(m => m.GetActiveTimeFrame()).ReturnsAsync((TimeFrame)null);
+        _timeFrameServiceMock.Setup(m => m.GetActiveTimeFrame()).ReturnsAsync((TimeFrame)null!);
         
         var actual = await _sut.GetActiveTimeFrame();
 
@@ -125,7 +125,7 @@ public class TimeFramesControllerTest
     public async Task GetTimeFrame_WithNonValidTimeFrameId_ReturnsNotFoundResult()
     {
         const int timeFrameId = -1;
-        _timeFrameServiceMock.Setup(m => m.GetTimeFrames(timeFrameId)).ReturnsAsync((TimeFrame)null);
+        _timeFrameServiceMock.Setup(m => m.GetTimeFrames(timeFrameId)).ReturnsAsync((TimeFrame)null!);
 
         var actual = await _sut.GetTimeFrame(timeFrameId);
         

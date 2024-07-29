@@ -1,6 +1,7 @@
 using api.Controllers;
 using api.Model.DTO;
 using api.Model.Entity;
+using api.Model.Request;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -59,7 +60,7 @@ public class ProjectsControllerTest
     public async Task Get_WithInvalidId_ReturnsNotFound()
     {
         const int projectId = -1;
-        _projectServiceMock.Setup(m => m.Get(projectId)).ReturnsAsync((Project)null);
+        _projectServiceMock.Setup(m => m.Get(projectId)).ReturnsAsync((Project)null!);
 
         var actual = await _sut.Get(projectId);
 

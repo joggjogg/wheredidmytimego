@@ -3,6 +3,7 @@ using api.integrationTests.TestInfrastructure;
 using api.Model.DTO;
 using api.Model.Entity;
 using api.Services;
+using api.test.TestInfrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.test.Services;
@@ -205,7 +206,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         var result = await _sut.GetActiveTimeFrame();
         const int expected = 2;
         
-        Assert.Equal(expected, result.TimeFrameId);
+        Assert.Equal(expected, result!.TimeFrameId);
         Assert.Null(result.TimeFrameEnd);
     }
 

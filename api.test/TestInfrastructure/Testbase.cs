@@ -1,5 +1,6 @@
 using api.integrationTests.Extensions;
 using api.Model;
+using api.test.TestInfrastructure;
 
 namespace api.integrationTests.TestInfrastructure;
 
