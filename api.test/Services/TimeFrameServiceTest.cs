@@ -101,7 +101,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         Db.TimeFrames.Add(new TimeFrame()
         {
             TimeFrameId = 1,
-            TimeFrameStart = DateTime.Parse("2024-06-11 10:00:00").ToUniversalTime()
+            TimeFrameStart = DateTime.Parse("2024-06-11 09:00:00").ToUniversalTime()
         });
         await Db.SaveChangesAsync();
         const int timeFrameId = 1;
