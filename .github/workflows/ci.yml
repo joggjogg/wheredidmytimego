@@ -10,6 +10,7 @@ on:
     paths:
       - "**.cs"
       - "**.csproj"
+  workflow_dispatch:
 
 jobs:
   build-and-test-api:
@@ -28,13 +29,25 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Run tests
-        run: dotnet test --no-restore --logger trx --collect "Code Coverage"
         continue-on-error: true
-      - name: Dotnet Test Reporter
-        uses: bibipkins/dotnet-test-reporter@v1.4.0
+        run: dotnet test --logger "trx;logfilename=testResults.trx"
+      - name: Archive test results artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: .api.test/TestResults/testResults.trx
+
+  generate-test-report:
+    needs: build-and-test-api
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download test result artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: test-results
+      - uses: bibipkins/dotnet-test-reporter@v1.4.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-title: "Unit Test Results"
-          results-path: .api.test/TestResults/*.trx
-          coverage-path: .api.test/TestResults/coverage.xml
+          results-path: ./testResults.trx
           coverage-threshold: 80
