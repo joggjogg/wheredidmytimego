@@ -4,9 +4,6 @@ name: continuous_integration
 
 on:
   pull_request:
-    paths:
-      - "**.cs"
-      - "**.csproj"
   workflow_dispatch:
 
 jobs:
