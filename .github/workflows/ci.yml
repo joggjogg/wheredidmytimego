@@ -6,6 +6,7 @@ on:
   push:
     branches: ["main"]
   pull_request:
+    branches: ["main"]
     paths:
       - "**.cs"
       - "**.csproj"
@@ -26,6 +27,8 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
+      - name: Generate tests
+        run: dotnet test --logger trx --collect "Code Coverage"
       - name: Dotnet Test Reporter
         uses: bibipkins/dotnet-test-reporter@v1.4.0
         with:
