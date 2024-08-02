@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
-      - name: Generate tests
+      - name: Run tests
         run: dotnet test --no-restore --logger trx --collect "Code Coverage"
         continue-on-error: true
       - name: Dotnet Test Reporter
@@ -35,6 +35,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-title: "Unit Test Results"
-          results-path: ./TestResults/*.trx
-          coverage-path: ./TestResults/coverage.xml
+          results-path: .api.test/TestResults/*.trx
+          coverage-path: .api.test/TestResults/coverage.xml
           coverage-threshold: 80
