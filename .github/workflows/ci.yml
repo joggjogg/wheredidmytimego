@@ -45,3 +45,8 @@ jobs:
           comment-title: "Unit Test Results"
           results-path: ./testResults.trx
           coverage-threshold: 80
+
+permissions:
+  checks: write
+  contents: write
+  pull-requests: write
