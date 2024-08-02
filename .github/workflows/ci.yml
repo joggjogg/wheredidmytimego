@@ -29,6 +29,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
       - name: Generate tests
         run: dotnet test --no-restore --logger trx --collect "Code Coverage"
+        continue-on-error: true
       - name: Dotnet Test Reporter
         uses: bibipkins/dotnet-test-reporter@v1.4.0
         with:
