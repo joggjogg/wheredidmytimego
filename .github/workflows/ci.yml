@@ -28,7 +28,14 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Generate tests
-        run: dotnet test --logger trx --collect "Code Coverage"
+        run: dotnet test --no-restore --logger trx --collect "Code Coverage"
+
+  generate-test-report:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ["8.0.x"]
+    steps:
       - name: Dotnet Test Reporter
         uses: bibipkins/dotnet-test-reporter@v1.4.0
         with:
