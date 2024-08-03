@@ -4,10 +4,6 @@ name: continuous_integration
 
 on:
   pull_request:
-    branches: ["main"]
-    paths:
-      - "**.cs"
-      - "**.csproj"
   workflow_dispatch:
 
 jobs:
@@ -33,7 +29,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: api.test/TestResults/
+          path: |
+            api.test/TestResults/testResults.trx
+            api.test/**/coverage.cobertura.xml
 
   generate-test-report:
     needs: build-and-test-api
@@ -46,8 +44,13 @@ jobs:
       - uses: bibipkins/dotnet-test-reporter@v1.4.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          comment-title: "API Test Report"
+          comment-title: "Unit Test Results"
           results-path: ./testResults.trx
-          coverage-path: ./**/coverage.cobertura.xml
+          coverage-path: ./coverage.cobertura.xml
           coverage-type: cobertura
           coverage-threshold: 80
+
+permissions:
+  checks: write
+  contents: write
+  pull-requests: write
