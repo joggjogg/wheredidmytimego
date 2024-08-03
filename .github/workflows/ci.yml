@@ -45,8 +45,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-title: "Unit Test Results"
-          results-path: ./testResults.trx
-          coverage-path: ./coverage.cobertura.xml
+          results-path: ./TestResults/testResults.trx
+          coverage-path: ./TestResults/**/coverage.cobertura.xml
           coverage-type: cobertura
           coverage-threshold: 80
 
