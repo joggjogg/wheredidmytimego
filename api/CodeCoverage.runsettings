@@ -6,7 +6,7 @@
 				<Configuration>
 					<ModulePaths>
 						<Exclude>
-							<ModulePath>.*\\Migrations\\.*</ModulePath>
+							<ModulePath>\\Migrations\\.*</ModulePath>
 						</Exclude>
 					</ModulePaths>
 				</Configuration>
