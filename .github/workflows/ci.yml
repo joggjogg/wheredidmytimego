@@ -24,7 +24,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
       - name: Run tests
         continue-on-error: true
-        run: dotnet test --logger "trx;logfilename=testResults.trx" --collect:"XPlat Code Coverage"
+        run: dotnet test --logger "trx;logfilename=testResults.trx" --collect:"XPlat Code Coverage" /p:ExcludeByFile=\“**/Migrations/*.cs,**/Migrations/Identity/*.cs,**/Model/Entity/*.cs,**/Model/Request/*.cs,**/Model/*.cs,**/Program.cs,**/Startup.cs”
       - name: Archive test results artifact
         uses: actions/upload-artifact@v4
         with:
