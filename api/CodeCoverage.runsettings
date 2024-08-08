@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+	<DataCollectionRunSettings>
+		<DataCollectors>
+			<DataCollector friendlyName="XPlat code coverage">
+				<Configuration>
+					<ModulePaths>
+						<Exclude>
+							<ModulePath>Migrations/*</ModulePath>
+							<ModulePath>Model/*</ModulePath>
+							<ModulePath>Program.cs</ModulePath>
+							<ModulePath>Startup.cs</ModulePath>
+						</Exclude>
+					</ModulePaths>
+				</Configuration>
+			</DataCollector>
+		</DataCollectors>
+	</DataCollectionRunSettings>
+</RunSettings>
