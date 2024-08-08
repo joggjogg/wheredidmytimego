@@ -6,10 +6,7 @@
 				<Configuration>
 					<ModulePaths>
 						<Exclude>
-							<ModulePath>Migrations/*</ModulePath>
-							<ModulePath>Model/*</ModulePath>
-							<ModulePath>Program.cs</ModulePath>
-							<ModulePath>Startup.cs</ModulePath>
+							<ModulePath>.*\\Migrations\\.*</ModulePath>
 						</Exclude>
 					</ModulePaths>
 				</Configuration>
