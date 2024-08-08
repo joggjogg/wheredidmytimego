@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using api.Model.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Model;
 
+[ExcludeFromCodeCoverage]
 public class ApplicationContext : DbContext
 {
     public virtual DbSet<TimeFrame> TimeFrames { get; set; }
