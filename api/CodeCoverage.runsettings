@@ -4,11 +4,8 @@
 		<DataCollectors>
 			<DataCollector friendlyName="XPlat code coverage">
 				<Configuration>
-					<ModulePaths>
-						<Exclude>
-							<ModulePath>**/*Migrations/*.cs</ModulePath>
-						</Exclude>
-					</ModulePaths>
+					<Format>cobertura</Format>
+					<ExcludeByFile>**/*Migrations/*.cs</ExcludeByFile>
 				</Configuration>
 			</DataCollector>
 		</DataCollectors>

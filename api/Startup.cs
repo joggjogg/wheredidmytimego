@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using api.Model;
 using api.Services;
@@ -8,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api;
 
-[ExcludeFromCodeCoverage]
 public class Startup
 {
     public Startup(IConfiguration configuration, IWebHostEnvironment env)
@@ -81,7 +79,6 @@ public class Startup
         {
             endpoints.MapControllers();
             endpoints.MapIdentityApi<IdentityUser>();
-
         });
         using var scope = scopeFactory.CreateScope();
         ApplyMigrations(scope.ServiceProvider.GetRequiredService<ApplicationContext>(),

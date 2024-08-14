@@ -1,9 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
 using Serilog;
 
 namespace api;
 
-[ExcludeFromCodeCoverage]
 public static class Program
 {
     public static int Main(string[] args)
@@ -28,7 +26,7 @@ public static class Program
         }
         catch (Exception ex)
         {
-            Log.Fatal(ex, "Host terminated unexpectedly"); 
+            Log.Fatal(ex, "Host terminated unexpectedly");
             return 1;
         }
         finally
