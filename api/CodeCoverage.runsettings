@@ -6,9 +6,9 @@
 				<Configuration>
 					<Format>cobertura</Format>
 					<ExcludeByFile>**/*Migrations/*.cs</ExcludeByFile>
-					<ExcludeByFile>**/*Migrations/*Identity/*.cs</ExcludeByFile>
-					<ExcludeByFile>**/*Startup.cs</ExcludeByFile>
-					<ExcludeByFile>**/*Program.cs</ExcludeByFile>
+					<ExcludeByFile>**/*Migrations/Identity/*.cs</ExcludeByFile>
+					<ExcludeByFile>Startup.cs</ExcludeByFile>
+					<ExcludeByFile>Program.cs</ExcludeByFile>
 				</Configuration>
 			</DataCollector>
 		</DataCollectors>
