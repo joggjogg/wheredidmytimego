@@ -1,40 +1,67 @@
-.grid {
-  max-height: 100%;
-  overflow-y: hidden;
-  height: 100%;
+.column__list {
+  flex-grow: 1;
   display: grid;
+  grid-template: repeat(4, minmax(0, 1fr)) / repeat(4, minmax(0, 1fr));
   gap: 1rem;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-areas:
-    'timeFrameActive timeFrameActive timeFrameList timeFrameList timeFrameList timeFrameList'
-    'timeFrameStart timeFrameStop timeFrameList timeFrameList timeFrameList timeFrameList'
-    '. . timeFrameList timeFrameList timeFrameList timeFrameList'
-    '. . timeFrameList timeFrameList timeFrameList timeFrameList';
+  min-height: 0;
+  min-width: 0;
+
+  & > div {
+    background-color: white;
+    padding: var(--mantine-spacing-md);
+    border: rem(1px) solid
+      light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    border-radius: var(--mantine-radius-md);
+  }
 }
 
-.grid > .itemOne,
-.grid > .itemFour {
-  padding: var(--mantine-spacing-md);
-  border: rem(1px) solid
-    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-  border-radius: var(--mantine-radius-md);
+.timeFrameActive {
+  grid-row: 1;
+  grid-column: 1 / span 4;
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    grid-column: 1 / span 2;
+  }
+  @media (min-width: $mantine-breakpoint-lg) {
+    grid-column: 1;
+  }
 }
 
-.itemOne {
-  grid-area: timeFrameActive;
+.timeFrameStart {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    grid-row: 1;
+    grid-column: 3;
+  }
+  @media (min-width: $mantine-breakpoint-lg) {
+    grid-row: 1;
+    grid-column: 2;
+  }
 }
 
-.itemTwo {
-  grid-area: timeFrameStart;
+.timeFrameStop {
+  grid-column: 3 / span 2;
+  grid-row: 2;
+  @media (min-width: $mantine-breakpoint-xs) {
+    grid-row: 1;
+    grid-column: 4;
+  }
+  @media (min-width: $mantine-breakpoint-lg) {
+    grid-row: 1;
+    grid-column: 3;
+  }
 }
 
-.itemThree {
-  grid-area: timeFrameStop;
-}
-
-.itemFour {
-  grid-area: timeFrameList;
-  height: 100%;
+.timeFrameList {
+  grid-column: 1 / span 4;
+  grid-row: 3 / span 2;
   overflow-y: scroll;
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    grid-row: 2 / span 3;
+  }
+  @media (min-width: $mantine-breakpoint-lg) {
+  }
 }

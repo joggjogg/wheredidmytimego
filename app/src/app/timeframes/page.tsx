@@ -21,17 +21,17 @@ export default function Timeframes() {
   return (
     <>
       <h1>TimeFrames</h1>
-      <div className={styles.grid}>
-        <div className={styles.itemOne}>
+      <ul className={styles.column__list}>
+        <div className={styles.timeFrameActive}>
           <TimeFrameActive />
         </div>
-        <div className={styles.itemTwo}>
+        <div className={styles.timeFrameStart}>
           <TimeFrameStart />
         </div>
-        <div className={styles.itemThree}>
+        <div className={styles.timeFrameStop}>
           <TimeFrameStop />
         </div>
-        <div className={styles.itemFour}>
+        <div className={styles.timeFrameList}>
           <GridSlotWrapper
             isLoading={isLoading}
             isSuccess={isSuccess}
@@ -41,7 +41,7 @@ export default function Timeframes() {
             {timeFrames && <TimeFrameList timeFrames={timeFrames} />}
           </GridSlotWrapper>
         </div>
-      </div>
+      </ul>
     </>
   )
 }

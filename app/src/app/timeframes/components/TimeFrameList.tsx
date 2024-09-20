@@ -22,7 +22,7 @@ const TimeFrameList = (props: { timeFrames: TimeFrame[] }) => {
   }, [timeFrames])
 
   return (
-    <Table stickyHeader highlightOnHover>
+    <Table stickyHeader stickyHeaderOffset={-16} highlightOnHover>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Date</Table.Th>
