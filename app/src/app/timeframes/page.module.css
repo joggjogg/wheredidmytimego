@@ -1,12 +1,12 @@
 .column__list {
   flex-grow: 1;
   display: grid;
-  grid-template: repeat(4, minmax(0, 1fr)) / repeat(4, minmax(0, 1fr));
+  grid-template: repeat(4, minmax(0, 1fr)) / repeat(6, minmax(0, 1fr));
   gap: 1rem;
   min-height: 0;
   min-width: 0;
 
-  & > div {
+  & > div:not(.timeFrameStart, .timeFrameStop) {
     background-color: white;
     padding: var(--mantine-spacing-md);
     border: rem(1px) solid
@@ -17,45 +17,44 @@
 
 .timeFrameActive {
   grid-row: 1;
-  grid-column: 1 / span 4;
+  grid-column: 1 / span 6;
 
   @media (min-width: $mantine-breakpoint-xs) {
     grid-column: 1 / span 2;
   }
   @media (min-width: $mantine-breakpoint-lg) {
-    grid-column: 1;
   }
 }
 
 .timeFrameStart {
-  grid-column: 1 / span 2;
+  grid-column: 1 / span 3;
   grid-row: 2;
 
   @media (min-width: $mantine-breakpoint-xs) {
     grid-row: 1;
-    grid-column: 3;
+    grid-column: 3 / span 2;
   }
   @media (min-width: $mantine-breakpoint-lg) {
     grid-row: 1;
-    grid-column: 2;
+    grid-column: 3;
   }
 }
 
 .timeFrameStop {
-  grid-column: 3 / span 2;
+  grid-column: 4 / span 3;
   grid-row: 2;
   @media (min-width: $mantine-breakpoint-xs) {
     grid-row: 1;
-    grid-column: 4;
+    grid-column: 5 / span 2;
   }
   @media (min-width: $mantine-breakpoint-lg) {
     grid-row: 1;
-    grid-column: 3;
+    grid-column: 4;
   }
 }
 
 .timeFrameList {
-  grid-column: 1 / span 4;
+  grid-column: 1 / span 6;
   grid-row: 3 / span 2;
   overflow-y: scroll;
 
