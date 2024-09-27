@@ -1,9 +1,9 @@
 using System.Data.Common;
-using api.integrationTests.Extensions;
 using api.Model;
 using Microsoft.EntityFrameworkCore;
+using api.test.Extensions;
 
-namespace api.integrationTests.TestInfrastructure;
+namespace api.test.TestInfrastructure;
 
 public class ContextBuilder
 {

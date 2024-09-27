@@ -1,0 +1,49 @@
+.container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label__container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.button__label {
+  display: inline-block;
+  font-weight: 500;
+  word-break: break-word;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+  font-size: var(--input-label-size, var(--mantine-font-size-sm));
+}
+
+.button__container {
+  display: flex;
+  flex-direction: column;
+
+  & button {
+    transition: all 0.3s ease-out;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    text-align: center;
+    &:hover,
+    &.active {
+      color: var(--mantine-color-white);
+      background-color: var(--mantine-color-gray-5);
+    }
+  }
+}
+
+.button__apply {
+  margin-top: auto;
+  align-self: flex-start;
+}

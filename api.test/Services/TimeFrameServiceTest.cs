@@ -1,10 +1,9 @@
 using api.Exceptions;
-using api.integrationTests.TestInfrastructure;
 using api.Model.DTO;
 using api.Model.Entity;
+using api.Model.Parameters;
 using api.Services;
 using api.test.TestInfrastructure;
-using Microsoft.EntityFrameworkCore;
 
 namespace api.test.Services;
 
@@ -19,7 +18,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
     }
 
     [Fact]
-    public async Task Get_ReturnsAllTimeFrames()
+    public async Task GetTimeFrames_WithValidParameters_ReturnsTimeFramesWithinParameters()
     {
         Db.TimeFrames.Add(new TimeFrame()
         {
@@ -34,8 +33,14 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
             TimeFrameEnd = DateTime.Parse("2024-06-12 16:32:23").ToUniversalTime(),
         });
         await Db.SaveChangesAsync();
+        var timeFrameParameters = new TimeFrameParameters()
+        {
+            DateFrom = DateTime.Parse("2024-05-01 10:00:00"),
+            DateTo = DateTime.Parse("2024-12-31 10:00:00"),
+            TzName = "Europe/Luxembourg",
+        };
 
-        var actual = await _sut.GetTimeFrames();
+        var actual = await _sut.GetTimeFrames(timeFrameParameters);
 
         Assert.Collection(actual,
             frame =>
@@ -101,7 +106,7 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         Db.TimeFrames.Add(new TimeFrame()
         {
             TimeFrameId = 1,
-            TimeFrameStart = DateTime.Parse("2024-06-11 09:00:00").ToUniversalTime()
+            TimeFrameStart = DateTime.Parse("2024-06-11 00:00:00").ToUniversalTime()
         });
         await Db.SaveChangesAsync();
         const int timeFrameId = 1;

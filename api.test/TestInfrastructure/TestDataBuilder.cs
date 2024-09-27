@@ -1,7 +1,7 @@
 using api.Model;
 using api.Model.Entity;
 
-namespace api.integrationTests.TestInfrastructure;
+namespace api.test.TestInfrastructure;
 
 public class TestDataBuilder(ApplicationContext db)
 {

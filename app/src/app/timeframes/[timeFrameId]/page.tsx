@@ -5,7 +5,7 @@ import {
   useGetTimeFrameQuery,
   useUpdateTimeFrameMutation,
 } from '@/lib/services/timeFrames'
-import { toFullDateString, toDurationString } from '@/lib/util/dates'
+import { toDateTimeString, toDurationString } from '@/lib/util/dates'
 import {
   Box,
   Button,
@@ -81,8 +81,8 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
   const handleSubmit = form.onSubmit(async values => {
     const result = await updateTimeFrameMutation({
       timeFrameId: timeFrame?.timeFrameId,
-      timeFrameStart: toFullDateString(values.timeFrameStart),
-      timeFrameEnd: toFullDateString(values.timeFrameEnd),
+      timeFrameStart: toDateTimeString(values.timeFrameStart),
+      timeFrameEnd: toDateTimeString(values.timeFrameEnd),
       tzName: Intl.DateTimeFormat().resolvedOptions().timeZone,
       description: values.description,
       projectId: parseInt(values.project),
@@ -176,7 +176,7 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
                   Started
                 </Text>
                 <Text size="md">
-                  {toFullDateString(new Date(timeFrame.timeFrameStart))}
+                  {toDateTimeString(new Date(timeFrame.timeFrameStart))}
                 </Text>
               </div>
               <div>
@@ -185,7 +185,7 @@ const Page = ({ params }: { params: { timeFrameId: string } }) => {
                 </Text>
                 <Text size="md">
                   {timeFrame.timeFrameEnd &&
-                    toFullDateString(new Date(timeFrame.timeFrameEnd))}
+                    toDateTimeString(new Date(timeFrame.timeFrameEnd))}
                 </Text>
               </div>
               <div>

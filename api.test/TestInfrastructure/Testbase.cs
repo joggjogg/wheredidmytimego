@@ -1,8 +1,7 @@
-using api.integrationTests.Extensions;
 using api.Model;
-using api.test.TestInfrastructure;
+using api.test.Extensions;
 
-namespace api.integrationTests.TestInfrastructure;
+namespace api.test.TestInfrastructure;
 
 public abstract class TestBase(ApplicationContextFixture fixture)
     : IClassFixture<ApplicationContextFixture>, IAsyncLifetime

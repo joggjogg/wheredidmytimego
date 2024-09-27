@@ -1,6 +1,7 @@
 using api.Controllers;
 using api.Model.DTO;
 using api.Model.Entity;
+using api.Model.Parameters;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -21,10 +22,12 @@ public class TimeFramesControllerTest
     [Fact]
     public async Task Get_ReturnsOkObjectResult()
     {
+        var parameters = new TimeFrameParameters();
         TimeFrame[] timeFrames = [new TimeFrame()];
-        _timeFrameServiceMock.Setup(m => m.GetTimeFrames()).ReturnsAsync(timeFrames);
+        
+        _timeFrameServiceMock.Setup(m => m.GetTimeFrames(parameters)).ReturnsAsync(timeFrames);
 
-        var actual = await _sut.Get();
+        var actual = await _sut.Get(parameters);
 
         var okObjectResult = Assert.IsType<OkObjectResult>(actual);
         Assert.IsAssignableFrom<IEnumerable<TimeFrame>>(okObjectResult.Value);

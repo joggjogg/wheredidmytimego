@@ -1,10 +1,10 @@
 'use client'
 
 import React from 'react'
-import ProjectList from './components/ProjectList'
-import ProjectCreate from './components/ProjectCreate'
+import ProjectList from '../../lib/components/Projects/ProjectList/ProjectList'
+import ProjectCreate from '../../lib/components/Projects/ProjectCreate/ProjectCreate'
 import { useGetProjectsQuery } from '@/lib/services/projects'
-import GridSlotWrapper from '@/lib/components/GridSlotWrapper'
+import GridSlotWrapper from '@/lib/components/GridSlotWrapper/GridSlotWrapper'
 import styles from './page.module.css'
 
 const Projects = () => {
@@ -19,7 +19,7 @@ const Projects = () => {
     <>
       <h1>Projects</h1>
       <div className={styles.grid}>
-        <div className={styles.itemOne}>
+        <div className={styles.projectList}>
           <GridSlotWrapper
             isLoading={isLoading}
             isSuccess={isSuccess}
@@ -29,7 +29,7 @@ const Projects = () => {
             {projects && <ProjectList projects={projects} />}
           </GridSlotWrapper>
         </div>
-        <div className={styles.itemTwo}>
+        <div className={styles.projectCreate}>
           <ProjectCreate />
         </div>
       </div>

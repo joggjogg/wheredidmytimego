@@ -2,6 +2,7 @@ using api.Exceptions;
 using api.Model;
 using api.Model.DTO;
 using api.Model.Entity;
+using api.Model.Parameters;
 using api.Services.Interfaces;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,41 @@ public class TimeFrameService(ApplicationContext applicationContext) : ITimeFram
     private readonly ILogger _logger = Log.ForContext<TimeFrameService>();
     private readonly DbSet<TimeFrame> _timeFrameRepository = applicationContext.Set<TimeFrame>();
 
-    public async Task<IEnumerable<TimeFrame>> GetTimeFrames()
+    public async Task<IEnumerable<TimeFrame>> GetTimeFrames(TimeFrameParameters timeFrameParameters)
     {
-        return await _timeFrameRepository.Include(t => t.Project).ToListAsync();
+        return await CreateQueryable(timeFrameParameters)
+            .Include(t => t.Project)
+            .AsSingleQuery()
+            .ToListAsync();
+    }
+
+    private IQueryable<TimeFrame> CreateQueryable(TimeFrameParameters timeFrameParameters)
+    {
+        var query = _timeFrameRepository.AsQueryable();
+
+        if (timeFrameParameters is { DateFrom: not null, DateTo: not null, TzName: not null })
+        {
+            try
+            {
+                var dateFromUtc = ToUniversalTime(timeFrameParameters.DateFrom.Value, timeFrameParameters.TzName);
+                var dateToUtc = ToUniversalTime(timeFrameParameters.DateTo.Value, timeFrameParameters.TzName);
+
+                query = query.Where(t => t.TimeFrameStart >= dateFromUtc && t.TimeFrameStart <= dateToUtc);
+            }
+            catch (TimeZoneNotFoundException)
+            {
+                _logger.Error("Time zone not found when converting local timezone to UTC: {timeZone}",
+                    timeFrameParameters.TzName);
+                throw;
+            }
+        }
+
+        if (timeFrameParameters.ProjectId.HasValue)
+        {
+            query = query.Where(t => t.ProjectId == timeFrameParameters.ProjectId.Value);
+        }
+
+        return query.OrderBy(t => t.TimeFrameStart);
     }
 
     public async Task<TimeFrame?> GetActiveTimeFrame()

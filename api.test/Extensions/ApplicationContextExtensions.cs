@@ -1,7 +1,7 @@
 using api.Model;
 using Z.EntityFramework.Plus;
 
-namespace api.integrationTests.Extensions;
+namespace api.test.Extensions;
 
 public static class ApplicationContextExtensions
 {

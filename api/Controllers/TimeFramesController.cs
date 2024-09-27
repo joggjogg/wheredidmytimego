@@ -1,4 +1,5 @@
 using api.Model.DTO;
+using api.Model.Parameters;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,9 @@ public class TimeFramesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] TimeFrameParameters parameters)
     {
-        var data = await _timeFrameService.GetTimeFrames();
+        var data = await _timeFrameService.GetTimeFrames(parameters);
         return Ok(data);
     }
 

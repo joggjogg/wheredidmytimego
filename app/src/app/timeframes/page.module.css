@@ -1,10 +1,10 @@
-.column__list {
+.grid {
   flex-grow: 1;
   display: grid;
   grid-template: repeat(4, minmax(0, 1fr)) / repeat(6, minmax(0, 1fr));
   gap: 1rem;
-  min-height: 0;
   min-width: 0;
+  min-height: 0;
 
   & > div:not(.timeFrameStart, .timeFrameStop) {
     background-color: white;
@@ -50,6 +50,20 @@
   @media (min-width: $mantine-breakpoint-lg) {
     grid-row: 1;
     grid-column: 4;
+  }
+}
+
+.timeFrameControls {
+  display: flex;
+  grid-column: 4 / span 3;
+  grid-row: 2;
+  @media (min-width: $mantine-breakpoint-xs) {
+    grid-row: 1;
+    grid-column: 5 / span 2;
+  }
+  @media (min-width: $mantine-breakpoint-lg) {
+    grid-row: 1;
+    grid-column: 5 / span 2;
   }
 }
 

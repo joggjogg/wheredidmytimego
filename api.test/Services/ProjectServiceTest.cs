@@ -1,4 +1,3 @@
-using api.integrationTests.TestInfrastructure;
 using api.Model.DTO;
 using api.Model.Entity;
 using api.Model.Request;

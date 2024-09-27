@@ -1,0 +1,8 @@
+.ol {
+  list-style-type: none;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+}

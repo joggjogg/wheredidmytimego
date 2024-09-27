@@ -1,3 +1,21 @@
 .timeElapsed {
   font-size: 3rem;
 }
+
+.label__container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.label__inactive {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 14px;
+}

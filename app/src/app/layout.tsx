@@ -13,7 +13,7 @@ import { IconClipboardList, IconClock, IconLogout } from '@tabler/icons-react'
 import classes from './layout.module.css'
 import StoreProvider from './storeProvider'
 import { Notifications } from '@mantine/notifications'
-import { RouterTransition } from '@/lib/components/RouterTransition'
+import { RouterTransition } from '@/lib/components/RouterTransition/RouterTransition'
 
 import './globals.css'
 import '@mantine/core/styles.css'

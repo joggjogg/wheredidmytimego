@@ -4,7 +4,6 @@ using api.JsonConverters;
 
 namespace api.Model.DTO;
 
-
 public class TimeFramePatchRequest
 {
     [JsonConverter(typeof(DateTimeConverterUsingDateTimeParse))]

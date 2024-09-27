@@ -2,7 +2,7 @@ import { Center, Loader, Stack } from '@mantine/core'
 import { SerializedError } from '@reduxjs/toolkit'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import React from 'react'
-import { errorToMessage } from '../services/helpers'
+import { errorToMessage } from '../../services/helpers'
 
 const GridSlotWrapper = ({
   children,

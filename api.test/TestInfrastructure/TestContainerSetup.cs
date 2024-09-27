@@ -1,6 +1,6 @@
 using Testcontainers.PostgreSql;
 
-namespace api.integrationTests.TestInfrastructure;
+namespace api.test.TestInfrastructure;
 
 public class TestContainerSetup
 {

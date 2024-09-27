@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { api } from './api'
 import { Project } from './projects'
 
@@ -13,10 +14,36 @@ export interface TimeFrame {
 
 type TimeFramesResponse = TimeFrame[]
 
+export interface TimeFrameParameters {
+  dateFrom?: string
+  dateTo?: string
+  tzName: string
+  projectId?: string
+}
+
+const createQueryString = (params: TimeFrameParameters): string => {
+  const queryString: any = {}
+
+  if (params.dateFrom && params.dateTo) {
+    queryString.dateFrom = format(params.dateFrom, 'yyyy-MM-dd')
+    queryString.dateTo = format(params.dateTo, 'yyyy-MM-dd')
+  }
+
+  if (params.projectId) {
+    queryString.projectId = params.projectId
+  }
+
+  queryString.tzName = params.tzName
+
+  return new URLSearchParams(queryString).toString()
+}
+
 export const timeFramesApi = api.injectEndpoints({
   endpoints: build => ({
-    getTimeFrames: build.query<TimeFramesResponse, void>({
-      query: () => ({ url: 'timeFrames' }),
+    getTimeFrames: build.query<TimeFramesResponse, TimeFrameParameters>({
+      query: (params: TimeFrameParameters) => ({
+        url: `timeFrames?${createQueryString(params)}`,
+      }),
       providesTags: (result = []) => [
         ...result.map(
           ({ timeFrameId }) => ({ type: 'TimeFrames', timeFrameId }) as const,

@@ -1,5 +1,4 @@
 using System.Data.Common;
-using api.integrationTests.TestInfrastructure;
 using api.Model;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;

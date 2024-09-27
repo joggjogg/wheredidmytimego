@@ -2,26 +2,25 @@
   display: grid;
   height: 100%;
   gap: 1rem;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-areas:
-    'projectName . . . . .'
-    'timeFrameList timeFrameList timeFrameList . . .'
-    'timeFrameList timeFrameList timeFrameList . . .'
-    'timeFrameList timeFrameList timeFrameList . . .';
+  grid-template: repeat(4, minmax(0, 1fr)) / repeat(6, minmax(0, 1fr));
+  min-width: 0;
+  min-height: 0;
+
+  & > div {
+    padding: var(--mantine-spacing-md);
+    border: rem(1px) solid
+      light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    border-radius: var(--mantine-radius-md);
+  }
 }
 
-.grid > div {
-  padding: var(--mantine-spacing-md);
-  border: rem(1px) solid
-    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-  border-radius: var(--mantine-radius-md);
-}
+.timeFrameList {
+  overflow-y: scroll;
 
-.itemOne {
-  grid-area: projectName;
-}
-
-.itemTwo {
-  grid-area: timeFrameList;
+  @media (min-width: $mantine-breakpoint-xs) {
+  }
+  @media (min-width: $mantine-breakpoint-lg) {
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 3;
+  }
 }
