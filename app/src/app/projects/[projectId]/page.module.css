@@ -24,3 +24,22 @@
     grid-row: 1 / span 3;
   }
 }
+
+.statistics {
+  display: flex;
+  flex-direction: column;
+}
+
+.label__container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.stat {
+  flex-grow: 1;
+}

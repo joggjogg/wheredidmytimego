@@ -56,7 +56,6 @@ const timeFrameControlsReducer = (
         preset: payload.preset,
       }
     case TimeFrameControlsActionKind.DATE_RANGE:
-      console.debug('date_range')
       return {
         ...state,
         dateFrom: payload.dateFrom,
@@ -109,10 +108,9 @@ export default function Timeframes() {
         </div>
         <div className={styles.timeFrameStart}>
           <TimeFrameStart />
-        </div>
-        <div className={styles.timeFrameStop}>
           <TimeFrameStop />
         </div>
+
         <div className={styles.timeFrameControls}>
           <TimeFrameControls
             dateRange={[state.dateFrom, state.dateTo]}

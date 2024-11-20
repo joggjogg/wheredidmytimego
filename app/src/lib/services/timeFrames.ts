@@ -21,7 +21,7 @@ export interface TimeFrameParameters {
   projectId?: string
 }
 
-const createQueryString = (params: TimeFrameParameters): string => {
+export const createQueryString = (params: TimeFrameParameters): string => {
   const queryString: any = {}
 
   if (params.dateFrom && params.dateTo) {

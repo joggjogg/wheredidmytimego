@@ -4,6 +4,7 @@ using api.Model.Entity;
 using api.Model.Parameters;
 using api.Services;
 using api.test.TestInfrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.test.Services;
 
@@ -20,19 +21,6 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
     [Fact]
     public async Task GetTimeFrames_WithValidParameters_ReturnsTimeFramesWithinParameters()
     {
-        Db.TimeFrames.Add(new TimeFrame()
-        {
-            TimeFrameId = 1,
-            TimeFrameStart = DateTime.Parse("2024-06-11 10:00:00").ToUniversalTime(),
-            TimeFrameEnd = DateTime.Parse("2024-06-11 14:32:23").ToUniversalTime(),
-        });
-        Db.TimeFrames.Add(new TimeFrame()
-        {
-            TimeFrameId = 2,
-            TimeFrameStart = DateTime.Parse("2024-06-12 09:41:00").ToUniversalTime(),
-            TimeFrameEnd = DateTime.Parse("2024-06-12 16:32:23").ToUniversalTime(),
-        });
-        await Db.SaveChangesAsync();
         var timeFrameParameters = new TimeFrameParameters()
         {
             DateFrom = DateTime.Parse("2024-05-01 10:00:00"),
@@ -46,12 +34,12 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
             frame =>
             {
                 Assert.IsType<TimeFrame>(frame);
-                Assert.Equal(1, frame.TimeFrameId);
+                Assert.Equal(100, frame.TimeFrameId);
             },
             frame =>
             {
                 Assert.IsType<TimeFrame>(frame);
-                Assert.Equal(2, frame.TimeFrameId);
+                Assert.Equal(101, frame.TimeFrameId);
             });
     }
 
@@ -242,6 +230,22 @@ public class TimeFrameServiceTest(ApplicationContextFixture fixture) : TestBase(
         var result = await _sut.GetTimeFrames(timeFrameId);
 
         Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task GetTimeFrameStatistics_WithParameters_ReturnsTimeFrameStatistics()
+    {
+        var timeFrameParameters = new TimeFrameParameters()
+        {
+            DateFrom = DateTime.Parse("2024-08-01"),
+            DateTo = DateTime.Parse("2024-12-31"),
+            TzName = "Europe/Amsterdam",
+            ProjectId = 100,
+        };
+
+        var actual = await _sut.GetTimeFrameStatistics(timeFrameParameters);
+        
+        Assert.Equal("5", actual.Hours);
     }
 
     // [Fact]

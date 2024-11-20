@@ -1,8 +1,10 @@
+using System.Globalization;
 using api.Exceptions;
 using api.Model;
 using api.Model.DTO;
 using api.Model.Entity;
 using api.Model.Parameters;
+using api.Model.Response;
 using api.Services.Interfaces;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -69,6 +71,46 @@ public class TimeFrameService(ApplicationContext applicationContext) : ITimeFram
             .Where(t => t.TimeFrameId == timeFrameId)
             .Include(t => t.Project)
             .FirstOrDefaultAsync(t => t.TimeFrameId == timeFrameId);
+    }
+
+    public async Task<TimeFrameStatisticsResponse> GetTimeFrameStatistics(TimeFrameParameters parameters)
+    {
+        var timeFrames = await CreateQueryable(parameters)
+            .Include(e => e.Project)
+            .AsSingleQuery()
+            .ToListAsync();
+
+        var timeSpan = timeFrames
+            .Select(e =>
+            {
+                var timeSpan = e.TimeFrameEnd.Value - e.TimeFrameStart;
+                return timeSpan;
+            })
+            .Aggregate(new TimeSpan(), ((total, next) => total.Add(next)));
+
+        var statistics = new TimeFrameStatisticsResponse()
+        {
+            Hours = Math.Round(timeSpan.TotalHours, MidpointRounding.ToZero).ToString(CultureInfo.InvariantCulture),
+            Minutes = timeSpan.Minutes.ToString(),
+            Seconds = timeSpan.Seconds.ToString(),
+        };
+
+        if (parameters.ProjectId is not null)
+        {
+            statistics.ProjectId = parameters.ProjectId.Value;
+        }
+
+        if (parameters.DateFrom is not null)
+        {
+            statistics.TimeFrameFrom = DateOnly.FromDateTime(parameters.DateFrom.Value);
+        }
+
+        if (parameters.DateTo is not null)
+        {
+            statistics.TimeFrameFrom = DateOnly.FromDateTime(parameters.DateTo.Value);
+        }
+
+        return statistics;
     }
 
     public async Task<TimeFrame> Create(TimeFramePostRequest timeFrame)

@@ -1,4 +1,5 @@
 using api.Model;
+using api.Model.Entity;
 using api.test.Extensions;
 
 namespace api.test.TestInfrastructure;
@@ -31,6 +32,34 @@ public abstract class TestBase(ApplicationContextFixture fixture)
     private TestDataBuilder CreateBaseTestData()
     {
         var builder = new TestDataBuilder(Db);
+
+        builder.WithProjects(new List<Project>()
+        {
+            new()
+            {
+                ProjectId = 100,
+                ProjectName = "Lottery-admin",
+                ProjectDescription = "Admin app for Elise",
+            }
+        });
+
+        builder.WithTimeFrames(new List<TimeFrame>()
+        {
+            new()
+            {
+                TimeFrameId = 100,
+                ProjectId = 100,
+                TimeFrameStart = DateTime.Parse("2024-10-30 10:00:00").ToUniversalTime(),
+                TimeFrameEnd = DateTime.Parse("2024-10-30 14:00:00").ToUniversalTime(),
+            },
+            new()
+            {
+                TimeFrameId = 101,
+                ProjectId = 100,
+                TimeFrameStart = DateTime.Parse("2024-10-31 14:00:00").ToUniversalTime(),
+                TimeFrameEnd = DateTime.Parse("2024-10-31 15:00:00").ToUniversalTime(),
+            },
+        });
 
         return builder;
     }

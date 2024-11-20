@@ -19,31 +19,13 @@ public class ProjectServiceTest(ApplicationContextFixture fixture) : TestBase(fi
     [Fact]
     public async Task Get_ReturnsAllProjects()
     {
-        Db.Projects.Add(new Project()
-        {
-            ProjectId = 1,
-            ProjectName = "Where Did My Time Go?",
-            ProjectDescription = "Prove to myself I can achieve anything"
-        });
-        Db.Projects.Add(new Project()
-        {
-            ProjectId = 2,
-            ProjectName = "Preaz",
-            ProjectDescription = "Tailor made massage planner"
-        });
-        await Db.SaveChangesAsync();
-
         var actual = await _sut.Get();
 
         Assert.Collection(actual,
             project =>
             {
                 Assert.IsType<Project>(project);
-                Assert.Equal(1, project.ProjectId);
-            }, project =>
-            {
-                Assert.IsType<Project>(project);
-                Assert.Equal(2, project.ProjectId);
+                Assert.Equal(100, project.ProjectId);
             });
     }
 
